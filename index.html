@@ -1036,7 +1036,8 @@
     }
 
     window.addEventListener('scroll', () => {
-      scrollProgress = window.scrollY / maxScroll;
+      let rawProgress = window.scrollY / maxScroll;
+      scrollProgress = Math.min(rawProgress / 0.85, 1);
       updatePartsPosition();
     });
 
