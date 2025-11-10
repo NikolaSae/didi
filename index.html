@@ -3,511 +3,1060 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="description" content="DIDI – Premium makete za decu. LED osvetljenje, punjive baterije, ručna izrada. Stvorite magični svet igre!"/>
   <title>DIDI – Magični Svet Igre</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&family=Fredoka+One&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Sora:wght@600;700;800&display=swap" rel="stylesheet"/>
   <style>
     :root {
       --bg: #FFFFFF;
       --text: #0F172A;
-      --accent: #FBBF24;
+      --accent: #F59E0B;
+      --accent-dark: #D97706;
       --secondary: #10B981;
-      --card: #F1F5F9;
-      --light: #E2E8F0;
-      --gray: #334155;
+      --secondary-dark: #059669;
+      --card: #F8FAFC;
+      --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      --gradient-gold: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
     }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; overflow-x: hidden; }
-    h1, h2, h3 { font-family: 'Fredoka One', cursive; color: var(--accent); }
-    .container { max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
+    
+    * { margin:0; padding:0; box-sizing:border-box; }
+    
+    body { 
+      font-family:'Inter',sans-serif; 
+      background: linear-gradient(to bottom, #0f172a 0%, #1e293b 25%, #334155 50%, #475569 75%, #64748b 100%);
+      color:var(--text); 
+      line-height:1.7; 
+      overflow-x:hidden; 
+    }
+    
+    h1,h2,h3 { font-family:'Sora',sans-serif; font-weight:800; }
+    .container { max-width:1400px; margin:0 auto; padding:0 2rem; position:relative; z-index:10; }
 
     /* HEADER */
     header {
-      padding: 1.5rem 0;
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 1000;
-      background: rgba(255,255,255,0.95);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(251,191,36,0.1);
+      padding:1.5rem 0;
+      position:fixed; top:0; left:0; right:0; z-index:1000;
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(20px) saturate(180%);
+      border-bottom:1px solid rgba(245, 158, 11, 0.2);
+      box-shadow: 0 4px 30px rgba(0,0,0,0.3);
     }
-    .nav { display: flex; justify-content: space-between; align-items: center; }
-    .logo { display: flex; align-items: center; gap: 0.5rem; font-size: 1.8rem; color: var(--accent); text-decoration: none; font-weight: bold; }
-    .logo img { height: 40px; border-radius: 8px; }
-    nav a { color: var(--text); text-decoration: none; margin-left: 2rem; font-weight: 500; font-size: 0.95rem; }
-    nav a:hover { color: var(--accent); }
-
-    /* HERO */
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      text-align: center;
-      padding-top: 6rem;
-      background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
-      position: relative;
-      overflow: hidden;
+    
+    .nav { 
+      display:flex; 
+      justify-content:space-between; 
+      align-items:center; 
+      max-width:1400px; 
+      margin:0 auto; 
+      padding:0 2rem; 
     }
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: url('https://m.media-amazon.com/images/S/aplus-media-library-service-media/eff56314-8995-49e3-ab6d-75a7912a57c7.__CR0,0,970,600_PT0_SX970_V1___.jpg') no-repeat center/cover;
-      opacity: 0.1;
-      z-index: -1;
-    }
-    .hero h1 {
-      font-size: 5rem;
-      margin-bottom: 1rem;
-      background: linear-gradient(90deg, var(--accent), var(--secondary));
+    
+    .logo { 
+      display:flex; 
+      align-items:center; 
+      gap:0.7rem; 
+      font-size:2rem; 
+      background: var(--gradient-gold);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      text-decoration:none; 
+      font-weight:800;
+      letter-spacing: -0.5px;
     }
-    .hero p { font-size: 1.5rem; max-width: 800px; margin: 0 auto 2rem; }
-    .btn {
-      background: var(--accent); color: #fff; padding: 1.2rem 3rem; border-radius: 50px;
-      text-decoration: none; font-weight: 600; transition: all 0.3s ease; display: inline-block;
-      box-shadow: 0 4px 10px rgba(251,191,36,0.3);
-    }
-    .btn:hover { transform: scale(1.05); box-shadow: 0 10px 20px rgba(251,191,36,0.5); }
-
-    /* SECTIONS */
-    section { padding: 8rem 0; }
-
-    /* PRODUCTS */
-    .products { background: #F9FAFB; }
-    .products h2 { text-align: center; font-size: 3.5rem; margin-bottom: 4rem; }
-    .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 3rem; }
-    .product-item {
-      background: var(--card); padding: 2.5rem; border-radius: 24px; text-align: center;
-      transition: transform 0.4s ease, box-shadow 0.4s ease; box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    }
-    .product-item:hover { transform: translateY(-15px); box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
-    .product-item img { width: 100%; border-radius: 16px; margin-bottom: 1.5rem; }
-    .product-item h3 { font-size: 2rem; margin-bottom: 1rem; }
-
-    /* GALLERY */
-    .gallery { padding: 8rem 0; background: linear-gradient(135deg, #EFF6FF 0%, #F0FDF4 100%); }
-    .gallery h2 { text-align: center; font-size: 3.5rem; margin-bottom: 4rem; }
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 2rem;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    .gallery-item {
+    
+    nav a { 
+      color:#fff; 
+      text-decoration:none; 
+      margin-left:2.5rem; 
+      font-weight:600; 
+      font-size:0.95rem;
+      transition: all 0.3s ease;
       position: relative;
-      overflow: hidden;
-      border-radius: 20px;
-      box-shadow: 0 15px 35px rgba(0,0,0,0.15);
-      cursor: pointer;
-      transition: transform 0.6s ease;
     }
-    .gallery-item:hover { transform: scale(1.05); }
-    .gallery-item img {
-      width: 100%;
-      height: 300px;
-      object-fit: cover;
-      transition: transform 0.6s ease;
-    }
-    .gallery-item:hover img { transform: scale(1.2); }
-    .gallery-caption {
+    
+    nav a::after {
+      content: '';
       position: absolute;
-      bottom: 1.5rem; left: 1.5rem; right: 1.5rem;
-      color: #fff;
-      font-weight: 600;
-      font-size: 1.2rem;
-      text-shadow: 0 2px 8px rgba(0,0,0,0.7);
-      background: rgba(0,0,0,0.4);
-      padding: 0.5rem;
-      border-radius: 8px;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--gradient-gold);
+      transition: width 0.3s ease;
     }
+    
+    nav a:hover::after { width: 100%; }
+    nav a:hover { color: #F59E0B; }
 
-    /* VS TABLE */
-    .vs { padding: 8rem 0; background: #F9FAFB; }
-    .vs h2 { text-align: center; font-size: 3.5rem; margin-bottom: 4rem; }
-    .vs-table { background: var(--card); border-radius: 24px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-    .vs-table table { width: 100%; border-collapse: collapse; }
-    .vs-table th, .vs-table td { padding: 1.8rem; text-align: center; border-bottom: 1px solid var(--light); }
-    .vs-table th { background: var(--accent); color: #fff; }
-    .vs-table .highlight { color: var(--secondary); font-weight: bold; }
-
-    /* TESTIMONIALS */
-    .testimonials { padding: 8rem 0; }
-    .testimonials h2 { text-align: center; font-size: 3.5rem; margin-bottom: 4rem; }
-    .testimonial-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 3rem; }
-    .testimonial {
-      background: var(--card); padding: 2.5rem; border-radius: 24px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-      text-align: center;
-      position: relative;
-    }
-    .testimonial::before { content: '“'; font-size: 6rem; color: var(--accent); position: absolute; top: -1rem; left: 50%; transform: translateX(-50%); opacity: 0.2; }
-    .stars { color: var(--accent); margin-bottom: 1rem; }
-
-    /* FOOTER */
-    footer { padding: 6rem 0 4rem; text-align: center; background: #EFF6FF; }
-    .footer-logo { margin-bottom: 1.5rem; }
-    .footer-logo img { height: 50px; border-radius: 12px; }
-
-    /* 360° ROTACIJA */
-    .spin360-3d {
-      height: 60vh;
+    /* MAKETA ASSEMBLY BACKGROUND */
+    #maketa-assembly {
+      position: fixed;
+      top: 0; left: 0;
       width: 100vw;
-      background: linear-gradient(to bottom, #87CEEB 0%, #E0F7FA 100%);
+      height: 100vh;
+      z-index: 1;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    #assembly-canvas {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* CONTENT SECTIONS */
+    .section {
+      position: relative;
+      min-height: 100vh;
+      z-index: 10;
       display: flex;
       align-items: center;
       justify-content: center;
+    }
+
+    /* HERO */
+    .hero {
+      background: transparent;
+      text-align: center;
+      padding-top: 8rem;
+      padding-bottom: 4rem;
+    }
+    
+    .hero h1 { 
+      font-size: 6rem; 
+      margin-bottom: 1.5rem; 
+      background: var(--gradient-gold);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 4px 20px rgba(245, 158, 11, 0.5));
+      line-height: 1.1;
+      letter-spacing: -2px;
+    }
+    
+    .hero p { 
+      font-size: 1.3rem; 
+      max-width: 700px; 
+      margin: 0 auto 2.5rem;
+      color: #E2E8F0;
+      font-weight: 400;
+      line-height: 1.8;
+    }
+    
+    .btn { 
+      background: var(--gradient-gold);
+      color: #0F172A; 
+      padding: 1.3rem 3.5rem; 
+      border-radius: 100px; 
+      text-decoration: none; 
+      font-weight: 700; 
+      font-size: 1.1rem;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+      display: inline-block; 
+      box-shadow: 0 10px 40px rgba(245, 158, 11, 0.4);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      transition: left 0.5s ease;
+    }
+    
+    .btn:hover::before { left: 100%; }
+    .btn:hover { 
+      transform: translateY(-3px) scale(1.05); 
+      box-shadow: 0 15px 50px rgba(245, 158, 11, 0.6); 
+    }
+
+    /* CARD STYLING */
+    .card-premium {
+      background: rgba(248, 250, 252, 0.08);
+      backdrop-filter: blur(40px) saturate(180%);
+      border-radius: 32px;
+      padding: 3.5rem;
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 
+        0 20px 60px rgba(0,0,0,0.3),
+        inset 0 1px 0 rgba(255,255,255,0.1);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    
+    .card-premium:hover {
+      transform: translateY(-8px);
+      box-shadow: 
+        0 30px 80px rgba(0,0,0,0.4),
+        inset 0 1px 0 rgba(255,255,255,0.15);
+      border-color: rgba(245, 158, 11, 0.3);
+    }
+
+    /* SECTIONS WRAPPER */
+    .sections-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    h2 { 
+      text-align: center; 
+      font-size: 3.5rem; 
+      margin-bottom: 3rem;
+      background: var(--gradient-gold);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -1px;
+    }
+
+    /* PRODUCTS */
+    .product-grid { 
+      display: grid; 
+      grid-template-columns: 1fr;
+      gap: 2rem; 
+    }
+    
+    .product-item {
+      background: rgba(248, 250, 252, 0.05);
+      backdrop-filter: blur(20px);
+      padding: 2rem; 
+      border-radius: 24px; 
+      text-align: center;
+      transition: all 0.4s ease; 
+      border: 1px solid rgba(255,255,255,0.08);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .product-item::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: var(--gradient-gold);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      z-index: 0;
+    }
+    
+    .product-item:hover::before { opacity: 0.05; }
+    
+    .product-item:hover { 
+      transform: translateY(-5px); 
+      border-color: rgba(245, 158, 11, 0.3);
+      box-shadow: 0 20px 50px rgba(245, 158, 11, 0.2);
+    }
+    
+    .product-item > * { position: relative; z-index: 1; }
+    
+    .product-item img { 
+      width: 100%; 
+      border-radius: 20px; 
+      margin-bottom: 1.5rem;
+      height: 280px;
+      object-fit: cover;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+    
+    .product-item h3 { 
+      font-size: 1.8rem; 
+      margin-bottom: 1rem;
+      color: #F59E0B;
+    }
+    
+    .product-item p {
+      color: #CBD5E1;
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    /* GALLERY */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+    
+    .gallery-item {
+      background: rgba(248, 250, 252, 0.05);
+      backdrop-filter: blur(20px);
+      padding: 1.5rem;
+      border-radius: 24px;
+      border: 1px solid rgba(255,255,255,0.08);
+      transition: all 0.4s ease;
       overflow: hidden;
       position: relative;
-      transition: background 1.2s ease;
     }
-    .spin360-3d.night {
-      background: linear-gradient(to bottom, #1a2a44 0%, #2d1b3a 100%);
-    }
-    .spin360-3d.night::before {
+    
+    .gallery-item::after {
       content: '';
       position: absolute;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: 
-        radial-gradient(1px 1px at 20% 15%, #fff, transparent),
-        radial-gradient(1px 1px at 80% 20%, #fff, transparent),
-        radial-gradient(1px 1px at 50% 10%, #fff, transparent),
-        radial-gradient(1px 1px at 35% 25%, #fff, transparent);
-      background-size: 120px 120px;
-      opacity: 0.7;
-      pointer-events: none;
-      z-index: 0;
-    }
-    .spin-container {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      perspective: 1800px;
-      cursor: grab;
-      user-select: none;
-    }
-    .spin-container.dragging { cursor: grabbing; }
-    .spin-viewer {
-      position: absolute;
-      bottom: 10%;
-      left: 50%;
-      width: 70vmin;
-      height: 50vmin;
-      transform: translateX(-50%) translateZ(150px) rotateX(70deg);
-      transform-style: preserve-3d;
-      overflow: visible;
-    }
-    #spinImage {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      object-position: bottom;
-      border-radius: 16px;
-      box-shadow: 0 60px 120px rgba(0,0,0,0.5), 0 0 40px rgba(251,191,36,0.25);
-      background: #fff;
-      padding: 14px;
-      border: 6px solid #e5e7eb;
-      user-select: none;
-      pointer-events: none;
-      position: relative;
-      z-index: 1;
-      transition: filter 1.2s ease;
-    }
-    .maketa-lights {
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: 
-        radial-gradient(circle at 30% 40%, rgba(255,220,100,0.6) 5%, transparent 20%),
-        radial-gradient(circle at 70% 35%, rgba(255,200,80,0.5) 4%, transparent 18%),
-        radial-gradient(circle at 50% 60%, rgba(255,240,120,0.4) 6%, transparent 22%);
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 1.2s ease;
-      z-index: 2;
-      border-radius: 16px;
-    }
-    .spin-viewer.night .maketa-lights { opacity: 1; }
-    .spin-hint {
-      position: absolute;
-      bottom: 15%;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(0,0,0,0.8);
-      color: #fff;
-      padding: 0.9rem 2rem;
-      border-radius: 50px;
-      font-size: 1.1rem;
-      font-weight: 600;
-      backdrop-filter: blur(14px);
+      background: var(--gradient-gold);
       opacity: 0;
       transition: opacity 0.4s ease;
       pointer-events: none;
-      z-index: 10;
     }
-    .spin-container:hover .spin-hint { opacity: 1; }
+    
+    .gallery-item:hover::after { opacity: 0.1; }
+    
+    .gallery-item:hover {
+      transform: scale(1.03);
+      border-color: rgba(245, 158, 11, 0.3);
+    }
+    
+    .gallery-item img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      border-radius: 16px;
+      margin-bottom: 1rem;
+    }
+    
+    .gallery-item p {
+      color: #E2E8F0;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    /* VS TABLE */
+    .vs-table { 
+      background: rgba(248, 250, 252, 0.05);
+      backdrop-filter: blur(20px);
+      border-radius: 24px; 
+      overflow: hidden; 
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    
+    .vs-table table { 
+      width: 100%; 
+      border-collapse: collapse; 
+    }
+    
+    .vs-table th, .vs-table td { 
+      padding: 1.5rem; 
+      text-align: center; 
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    
+    .vs-table th { 
+      background: rgba(245, 158, 11, 0.15);
+      color: #F59E0B; 
+      font-size: 1rem;
+      font-weight: 700;
+    }
+    
+    .vs-table td {
+      color: #CBD5E1;
+      font-size: 0.9rem;
+    }
+    
+    .vs-table .highlight { 
+      background: rgba(16, 185, 129, 0.1);
+      color: #10B981; 
+      font-weight: 600; 
+    }
+
+    /* FEATURES */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+    
+    .feature-item {
+      background: rgba(248, 250, 252, 0.05);
+      backdrop-filter: blur(20px);
+      padding: 2rem;
+      border-radius: 20px;
+      text-align: center;
+      border: 1px solid rgba(255,255,255,0.08);
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .feature-item::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: var(--gradient-gold);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+    
+    .feature-item:hover::before { opacity: 0.05; }
+    
+    .feature-item:hover {
+      transform: translateY(-5px);
+      border-color: rgba(245, 158, 11, 0.3);
+    }
+    
+    .feature-item > * { position: relative; z-index: 1; }
+    
+    .feature-icon {
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+      filter: drop-shadow(0 4px 10px rgba(245, 158, 11, 0.3));
+    }
+    
+    .feature-item h3 {
+      font-size: 1.4rem;
+      margin-bottom: 0.5rem;
+      color: #F59E0B;
+    }
+    
+    .feature-item p {
+      color: #CBD5E1;
+      font-size: 0.9rem;
+    }
+
+    /* TESTIMONIALS */
+    .testimonials {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+    
+    .testimonial-grid { 
+      display: grid; 
+      grid-template-columns: repeat(3, 1fr); 
+      gap: 2rem; 
+    }
+    
+    .testimonial {
+      background: rgba(248, 250, 252, 0.08);
+      backdrop-filter: blur(40px);
+      padding: 2.5rem;
+      border-radius: 24px;
+      text-align: center;
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: all 0.4s ease;
+      position: relative;
+    }
+    
+    .testimonial::before { 
+      content: '"'; 
+      font-size: 6rem; 
+      color: rgba(245, 158, 11, 0.2);
+      position: absolute; 
+      top: -1rem; 
+      left: 50%; 
+      transform: translateX(-50%); 
+      font-family: 'Sora', sans-serif;
+      font-weight: 800;
+    }
+    
+    .testimonial:hover {
+      transform: translateY(-8px);
+      border-color: rgba(245, 158, 11, 0.3);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+    }
+    
+    .stars { 
+      color: #F59E0B; 
+      margin-bottom: 1rem; 
+      font-size: 1.3rem;
+    }
+    
+    .testimonial p {
+      color: #E2E8F0;
+      font-size: 0.95rem;
+      line-height: 1.7;
+      margin-bottom: 1rem;
+    }
+    
+    .testimonial p strong {
+      color: #F59E0B;
+      font-weight: 600;
+    }
+
+    /* FOOTER */
+    footer {
+      background: rgba(15, 23, 42, 0.9);
+      backdrop-filter: blur(40px);
+      padding: 5rem 2rem 3rem;
+      text-align: center;
+      position: relative;
+      z-index: 10;
+      border-top: 1px solid rgba(245, 158, 11, 0.2);
+      margin-top: 4rem;
+    }
+    
+    .footer-logo {
+      font-size: 2.5rem;
+      background: var(--gradient-gold);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 800;
+      margin-bottom: 1rem;
+      font-family: 'Sora', sans-serif;
+    }
+    
+    footer p {
+      color: #CBD5E1;
+      font-size: 1rem;
+      margin: 0.5rem 0;
+    }
+
+    @media (max-width: 1024px) {
+      .sections-wrapper {
+        grid-template-columns: 1fr;
+      }
+      .testimonial-grid {
+        grid-template-columns: 1fr;
+      }
+      .feature-grid {
+        grid-template-columns: 1fr;
+      }
+    }
 
     @media (max-width: 768px) {
       .hero h1 { font-size: 3.5rem; }
-      .product-grid, .gallery-grid, .testimonial-grid { grid-template-columns: 1fr; }
-      .spin-viewer { width: 90vmin; height: 60vmin; bottom: 5%; }
+      .hero p { font-size: 1.1rem; }
+      h2 { font-size: 2.5rem; }
+      .product-grid, .gallery-grid { grid-template-columns: 1fr; }
+      nav a { margin-left: 1.5rem; font-size: 0.85rem; }
     }
   </style>
 </head>
 <body>
-
   <!-- HEADER -->
   <header>
-    <div class="container">
-      <div class="nav">
-        <a href="#" class="logo">
-          <img src="https://i.imgur.com/LOGO_PLACEHOLDER.png" alt="DIDI"> DIDI
-        </a>
-        <nav>
-          <a href="#proizvodi">Proizvodi</a>
-          <a href="#galerija">Galerija</a>
-          <a href="#vs">Uporedi</a>
-          <a href="#recenzije">Recenzije</a>
-        </nav>
-      </div>
+    <div class="nav">
+      <a href="#" class="logo">🏘️ DIDI</a>
+      <nav>
+        <a href="#proizvodi">Proizvodi</a>
+        <a href="#galerija">Galerija</a>
+        <a href="#vs">Uporedi</a>
+        <a href="#recenzije">Recenzije</a>
+      </nav>
     </div>
   </header>
 
-  <!-- HERO -->
-  <section class="hero">
+  <!-- FIXED BACKGROUND - MAKETA ASSEMBLY -->
+  <div id="maketa-assembly">
+    <canvas id="assembly-canvas"></canvas>
+  </div>
+
+  <!-- HERO SECTION -->
+  <section class="section hero">
     <div class="container">
-      <h1 data-aos="zoom-in">Otkrijte Magiju DIDI Maketa!</h1>
-      <p data-aos="fade-up" data-aos-delay="200">
-        Premium makete grada i sela sa LED osvetljenjem, punjivim baterijama i ručnom izradom. Bezbedno, trajno i puno avantura za vašu decu!
+      <h1>Otkrijte Magiju<br>DIDI Maketa!</h1>
+      <p>
+        Premium makete grada i sela sa LED osvetljenjem, punjivim baterijama i ručnom izradom. 
+        Bezbedno, trajno i puno avantura za vašu decu!
       </p>
-      <a href="#proizvodi" class="btn" data-aos="fade-up" data-aos-delay="400">Pogledajte Makete</a>
+      <a href="#proizvodi" class="btn">Pogledajte Makete</a>
     </div>
   </section>
 
-  <!-- 360° ROTACIJA -->
-  <section class="spin360-3d" id="spin360">
-    <div class="spin-container" id="spinContainer">
-      <div class="spin-viewer">
-        <img id="spinImage" src="" alt="Maketa 360°" />
-        <div class="maketa-lights"></div>
+  <!-- PRODUCTS & GALLERY -->
+  <section class="section split" id="proizvodi">
+    <div class="sections-wrapper">
+      <div class="card-premium">
+        <h2>Naše Makete</h2>
+        <div class="product-grid">
+          <div class="product-item">
+            <img src="https://i.ebayimg.com/images/g/fa0AAOSwuSlhk3jg/s-l1200.jpg" alt="Maketa Grada">
+            <h3>Maketa Grada</h3>
+            <p>1m x 1m ploča sa zgradama, svetlima, ulicama i detaljima. LED za noćnu igru, punjiva baterija.</p>
+            <a href="#galerija" class="btn" style="margin-top:1.5rem;">Detalji</a>
+          </div>
+          <div class="product-item">
+            <img src="https://www.inquirer.com/resizer/niRxA0eJJmoC4O0YGfaJ6UBb3pQ=/arc-anglerfish-arc2-prod-pmn/public/XC65IGYTI5CLDM3WPWOO3TPETI.jpg" alt="Maketa Sela">
+            <h3>Maketa Sela</h3>
+            <p>1m x 1m sa farmama, životinjama, rekama i LED svetlima. Ručno oslikano, bezbedno za decu.</p>
+            <a href="#galerija" class="btn" style="margin-top:1.5rem;">Detalji</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- GALLERY -->
+      <div class="card-premium" id="galerija">
+        <h2>Izbliza</h2>
+        <div class="gallery-grid">
+          <div class="gallery-item">
+            <img src="https://i.ebayimg.com/images/g/fa0AAOSwuSlhk3jg/s-l1200.jpg" alt="Noćna scena">
+            <p><strong>LED Osvetljenje</strong></p>
+          </div>
+          <div class="gallery-item">
+            <img src="https://www.inquirer.com/resizer/niRxA0eJJmoC4O0YGfaJ6UBb3pQ=/arc-anglerfish-arc2-prod-pmn/public/XC65IGYTI5CLDM3WPWOO3TPETI.jpg" alt="Detalji">
+            <p><strong>Ručna Izrada</strong></p>
+          </div>
+          <div class="gallery-item">
+            <img src="https://m.media-amazon.com/images/S/aplus-media-library-service-media/eff56314-8995-49e3-ab6d-75a7912a57c7.__CR0,0,970,600_PT0_SX970_V1___.jpg" alt="Komplet">
+            <p><strong>Kompletna Maketa</strong></p>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="spin-hint">
-      <p>Prevuci levo/desno da obiđeš maketu 360°</p>
+  </section>
+
+  <!-- VS TABLE & FEATURES -->
+  <section class="section split" id="vs">
+    <div class="sections-wrapper">
+      <div class="card-premium">
+        <h2>DIDI VS Obične</h2>
+        <div class="vs-table">
+          <table>
+            <tr><th>Karakteristika</th><th>Obične</th><th class="highlight">DIDI</th></tr>
+            <tr><td>Bezbednost</td><td>Rizik</td><td class="highlight">EN71 sertifikat</td></tr>
+            <tr><td>Trajnost</td><td>Brzo se kvare</td><td class="highlight">Doživotna garancija</td></tr>
+            <tr><td>Zabava</td><td>Kratkotrajna</td><td class="highlight">Godine mašte</td></tr>
+            <tr><td>Održavanje</td><td>Sami rešavate</td><td class="highlight">Servis 48h</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- FEATURES -->
+      <div class="card-premium">
+        <h2>Zašto DIDI?</h2>
+        <div class="feature-grid">
+          <div class="feature-item">
+            <div class="feature-icon">🔒</div>
+            <h3>Bezbedno</h3>
+            <p>EN71 sertifikat netoksične boje</p>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">💡</div>
+            <h3>LED Svetla</h3>
+            <p>Punjive baterije</p>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">🎨</div>
+            <h3>Ručna Izrada</h3>
+            <p>Unikatno delo</p>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">🛠️</div>
+            <h3>Popravke</h3>
+            <p>Besplatno zauvek</p>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
-<!-- PRODUCTS -->
-<section class="products" id="proizvodi">
-<div class="container">
-<h2 data-aos="fade-up">Naše Makete</h2>
-<div class="product-grid">
-<div class="product-item" data-aos="fade-right">
-<img src="https://i.ebayimg.com/images/g/fa0AAOSwuSlhk3jg/s-l1200.jpg" alt="Maketa Grada">
-<h3>Maketa Grada</h3>
-<p>1m x 1m ploča sa zgradama, svetlima, ulicama i detaljima. LED za noćnu igru, punjiva baterija.</p>
-<a href="#galerija" class="btn" style="margin-top:1rem;">Detalji</a>
-</div>
-<div class="product-item" data-aos="fade-left">
-<img src="https://www.inquirer.com/resizer/niRxA0eJJmoC4O0YGfaJ6UBb3pQ=/arc-anglerfish-arc2-prod-pmn/public/XC65IGYTI5CLDM3WPWOO3TPETI.jpg" alt="Maketa Sela">
-<h3>Maketa Sela</h3>
-<p>1m x 1m sa farmama, životinjama, rekama i LED svetlima. Ručno oslikano, bezbedno za decu.</p>
-<a href="#galerija" class="btn" style="margin-top:1rem;">Detalji</a>
-</div>
-</div>
-</div>
-</section>
-<!-- GALLERY -->
-<section class="gallery" id="galerija">
-<div class="container">
-<h2 data-aos="fade-up">Pogledajte Izbliza</h2>
-<div class="gallery-grid">
-<a href="https://m.media-amazon.com/images/S/aplus-media-library-service-media/fc96c55e-3b1e-4087-8dc9-c224092e8913.__CR0,0,970,600_PT0_SX970_V1___.jpg" data-lightbox="gallery" class="gallery-item" data-aos="fade-up">
-<img src="https://m.media-amazon.com/images/S/aplus-media-library-service-media/fc96c55e-3b1e-4087-8dc9-c224092e8913.__CR0,0,970,600_PT0_SX970_V1___.jpg" alt="Policijska stanica">
-<div class="gallery-caption">Policijska stanica sa rotirajućim svetlom</div>
-</a>
-<a href="https://i.ebayimg.com/images/g/BBYAAOSwuSlhn9OV/s-l1200.jpg" data-lightbox="gallery" class="gallery-item" data-aos="fade-up" data-aos-delay="100">
-<img src="https://i.ebayimg.com/images/g/BBYAAOSwuSlhn9OV/s-l1200.jpg" alt="Vatrogasna stanica">
-<div class="gallery-caption">Vatrogasna stanica sa crevom i sirenama</div>
-</a>
-<a href="https://m.media-amazon.com/images/I/810NJ0799qL._UF1000,1000_QL80_.jpg" data-lightbox="gallery" class="gallery-item" data-aos="fade-up" data-aos-delay="200">
-<img src="https://m.media-amazon.com/images/I/810NJ0799qL._UF1000,1000_QL80_.jpg" alt="Prodavnica">
-<div class="gallery-caption">Prodavnica sa LED izlogom</div>
-</a>
-<a href="https://m.media-amazon.com/images/S/aplus-media-library-service-media/56879295-97fd-47c3-98a1-ba342e5511c0.__CR0,0,600,450_PT0_SX600_V1___.jpg" data-lightbox="gallery" class="gallery-item" data-aos="fade-up" data-aos-delay="300">
-<img src="https://m.media-amazon.com/images/S/aplus-media-library-service-media/56879295-97fd-47c3-98a1-ba342e5511c0.__CR0,0,600,450_PT0_SX600_V1___.jpg" alt="Farma">
-<div class="gallery-caption">Farma sa životinjama i potokom</div>
-</a>
-<a href="https://i.redd.it/zdtvwt2m7qt51.jpg" data-lightbox="gallery" class="gallery-item" data-aos="fade-up" data-aos-delay="400">
-<img src="https://i.redd.it/zdtvwt2m7qt51.jpg" alt="Noćni grad">
-<div class="gallery-caption">Noćni prikaz sa punim LED osvetljenjem</div>
-</a>
-<a href="https://media.printables.com/media/prints/882334/images/6763764_223fffb0-70cb-4d63-a62c-9873697c1872_aeaa48c5-b8fd-45e5-a5d9-268c3c57b673/thumbs/inside/1280x960/jpg/p1.webp" data-lightbox="gallery" class="gallery-item" data-aos="fade-up" data-aos-delay="500">
-<img src="https://media.printables.com/media/prints/882334/images/6763764_223fffb0-70cb-4d63-a62c-9873697c1872_aeaa48c5-b8fd-45e5-a5d9-268c3c57b673/thumbs/inside/1280x960/jpg/p1.webp" alt="USB-C punjenje">
-<div class="gallery-caption">USB-C stanica – punjenje za 2h</div>
-</a>
-</div>
-</div>
-</section>
-<!-- VS TABLE -->
-<section class="vs" id="vs">
-<div class="container">
-<h2 data-aos="fade-up">DIDI VS. Obične Igračke</h2>
-<div class="vs-table" data-aos="fade-up" data-aos-delay="200">
-<table>
-<tr><th>Karakteristika</th><th>Obične Igračke</th><th class="highlight">DIDI Makete</th></tr>
-<tr><td>Bezbednost</td><td>Štetne boje, rizik</td><td>EN71 sertifikat, netoksično</td></tr>
-<tr><td>Trajnost</td><td>Brzo se kvare</td><td>Ručna izrada, besplatne popravke</td></tr>
-<tr><td>Zabava</td><td>Kratkotrajna</td><td>Godine mašte sa LED svetlima</td></tr>
-<tr><td>Održavanje</td><td>Sami rešavate</td><td>Mi brinemo – nova baterija u 48h</td></tr>
-</table>
-</div>
-</div>
-</section>
-<!-- TESTIMONIALS -->
-<section class="testimonials" id="recenzije">
-<div class="container">
-<h2 data-aos="fade-up">Šta Kažu Roditelji</h2>
-<div class="testimonial-grid">
-<div class="testimonial" data-aos="fade-up">
-<div class="stars">★★★★★</div>
-<p>"LED svetla su magična! Deca se igraju satima, a kada se baterija isprazni, nova stiže brzo."</p>
-<p style="margin-top:1rem;font-weight:600;">— Ana, Beograd</p>
-</div>
-<div class="testimonial" data-aos="fade-up" data-aos-delay="100">
-<div class="stars">★★★★★</div>
-<p>"Najbolja investicija! Ručna izrada je vidljiva u svakom detalju, a bezbednost je na prvom mestu."</p>
-<p style="margin-top:1rem;font-weight:600;">— Marko, Novi Sad</p>
-</div>
-<div class="testimonial" data-aos="fade-up" data-aos-delay="200">
-<div class="stars">★★★★★</div>
-<p>"Maketa sela je hit! Životinje, reke, svetla – prava avantura za mališane."</p>
-<p style="margin-top:1rem;font-weight:600;">— Jelena, Niš</p>
-</div>
-</div>
-</div>
-</section>
-<!-- FOOTER -->
-<footer>
-<div class="container">
-<div class="footer-logo">
-<img src="https://i.imgur.com/LOGO_PLACEHOLDER.png" alt="DIDI">
-<span style="font-size:1.8rem;font-weight:bold;color:var(--accent);margin-left:0.5rem;">DIDI</span>
-</div>
-<p style="font-style:italic;margin:0.5rem 0;">Magični Svet Igre</p>
-<p>info@didi.rs | +381 60 123 4567</p>
-<p style="margin-top:1.5rem;">&copy; 2025 DIDI. Sva prava zadržana.</p>
-<a href="#proizvodi" class="btn" style="margin-top:2rem;">Kupi Sada</a>
-</div>
-</footer>
+  <!-- TESTIMONIALS -->
+  <section class="section" id="recenzije">
+    <div class="testimonials">
+      <h2>Šta Kažu Roditelji</h2>
+      <div class="testimonial-grid">
+        <div class="testimonial">
+          <div class="stars">⭐⭐⭐⭐⭐</div>
+          <p>"Moj sin se igra svaki dan! LED svetla su fantastična, a kvalitet je neverovatno dobar."</p>
+          <p><strong>– Marija, Beograd</strong></p>
+        </div>
+        <div class="testimonial">
+          <div class="stars">⭐⭐⭐⭐⭐</div>
+          <p>"Konačno igračka koja traje! Baterija se puni za sat vremena i drži celu nedelju."</p>
+          <p><strong>– Stefan, Novi Sad</strong></p>
+        </div>
+        <div class="testimonial">
+          <div class="stars">⭐⭐⭐⭐⭐</div>
+          <p>"Ručna izrada se vidi! Svaki detalj je savršen. Deca su oduševljena!"</p>
+          <p><strong>– Ana, Niš</strong></p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-logo">🏘️ DIDI</div>
+      <p style="font-style:italic;margin:0.5rem 0;">Magični Svet Igre</p>
+      <p>info@didi.rs | +381 60 123 4567</p>
+      <p style="margin-top:1.5rem;">&copy; 2025 DIDI. Sva prava zadržana.</p>
+      <a href="#proizvodi" class="btn" style="margin-top:2rem;">Kupi Sada</a>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script>
-    AOS.init({ duration: 1200, once: true });
-    lightbox.option({ 'resizeDuration': 200, 'wrapAround': true });
-  </script>
-  <script>
-    const container = document.getElementById('spinContainer');
-    const image = document.getElementById('spinImage');
-    const frameCount = 36;
-    const images = [];
+    // THREE.JS MAKETA ASSEMBLY ANIMATION
+    const canvas = document.getElementById('assembly-canvas');
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.set(0, 18, 45);
+    camera.lookAt(0, 0, 0);
 
-    for (let i = 0; i < frameCount; i++) {
-      const img = new Image();
-      img.src = `maketa360/maketa_${String(i).padStart(2, '0')}.jpg`;
-      images.push(img);
-    }
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor(0x000000, 0);
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
-    let isDragging = false;
-    let previousX = 0;
-    let currentFrame = 0;
-    let velocity = 0;
-    const sensitivity = 0.4;   // 2.5x sporije
-    const friction = 0.96;     // duža inercija
+    // Lighting
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+    scene.add(ambientLight);
+    
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 1.2);
+    directionalLight.position.set(15, 30, 15);
+    directionalLight.castShadow = true;
+    directionalLight.shadow.mapSize.width = 2048;
+    directionalLight.shadow.mapSize.height = 2048;
+    directionalLight.shadow.camera.left = -40;
+    directionalLight.shadow.camera.right = 40;
+    directionalLight.shadow.camera.top = 40;
+    directionalLight.shadow.camera.bottom = -40;
+    scene.add(directionalLight);
 
-    container.addEventListener('mousedown', e => {
-      isDragging = true;
-      previousX = e.clientX;
-      container.classList.add('dragging');
-      velocity = 0;
+    // BASE PLATFORM
+    const baseGeometry = new THREE.BoxGeometry(35, 0.8, 35);
+    const baseMaterial = new THREE.MeshStandardMaterial({ 
+      color: 0x90C695,
+      roughness: 0.9,
+      metalness: 0.1
     });
+    const base = new THREE.Mesh(baseGeometry, baseMaterial);
+    base.position.y = 0;
+    base.receiveShadow = true;
+    scene.add(base);
 
-    document.addEventListener('mousemove', e => {
-      if (!isDragging) return;
-      const deltaX = e.clientX - previousX;
-      previousX = e.clientX;
-      velocity = deltaX * sensitivity;
-      currentFrame -= velocity * 0.1;
-      currentFrame = (currentFrame + frameCount * 10) % frameCount;
-      updateFrame();
-    });
-
-    document.addEventListener('mouseup', () => {
-      if (!isDragging) return;
-      isDragging = false;
-      container.classList.remove('dragging');
-      inertia();
-    });
-
-    container.addEventListener('touchstart', e => {
-      isDragging = true;
-      previousX = e.touches[0].clientX;
-      velocity = 0;
-    }, { passive: true });
-
-    document.addEventListener('touchmove', e => {
-      if (!isDragging) return;
-      const deltaX = e.touches[0].clientX - previousX;
-      previousX = e.touches[0].clientX;
-      velocity = deltaX * sensitivity;
-      currentFrame -= velocity * 0.1;
-      currentFrame = (currentFrame + frameCount * 10) % frameCount;
-      updateFrame();
-    }, { passive: false });
-
-    document.addEventListener('touchend', () => {
-      isDragging = false;
-      inertia();
-    });
-
-    function updateFrame() {
-      const frame = Math.round(currentFrame) % frameCount;
-      image.src = images[frame].src;
-
-      const angle = (frame * 10) % 360;
-      const section = document.querySelector('.spin360-3d');
-      const viewer = document.querySelector('.spin-viewer');
-
-      const relativeAngle = ((angle + 360) % 360);
-      const isFront = relativeAngle <= 90 || relativeAngle >= 270;
-
-      if (isFront) {
-        section.classList.remove('night');
-        viewer.classList.remove('night');
-      } else {
-        section.classList.add('night');
-        viewer.classList.add('night');
+    // Create brick texture
+    function createBrickTexture() {
+      const canvas = document.createElement('canvas');
+      canvas.width = 256;
+      canvas.height = 256;
+      const ctx = canvas.getContext('2d');
+      
+      ctx.fillStyle = '#C14A3A';
+      ctx.fillRect(0, 0, 256, 256);
+      
+      ctx.strokeStyle = '#8B3626';
+      ctx.lineWidth = 2;
+      for (let y = 0; y < 256; y += 32) {
+        for (let x = 0; x < 256; x += 64) {
+          const offsetX = (y / 32) % 2 === 0 ? 0 : 32;
+          ctx.strokeRect(x + offsetX, y, 64, 32);
+        }
       }
+      
+      return new THREE.CanvasTexture(canvas);
     }
 
-    function inertia() {
-      if (Math.abs(velocity) > 0.3) {
-        velocity *= friction;
-        currentFrame -= velocity * 0.1;
-        updateFrame();
-        requestAnimationFrame(inertia);
-      } else {
-        currentFrame = Math.round(currentFrame) % frameCount;
-        updateFrame();
+    const brickTexture = createBrickTexture();
+    const parts = [];
+    
+    function createHouse(x, z, color, size = 1) {
+      const group = new THREE.Group();
+      
+      const bodyGeo = new THREE.BoxGeometry(2 * size, 3 * size, 2 * size);
+      const bodyMat = new THREE.MeshStandardMaterial({ 
+        map: brickTexture,
+        roughness: 0.8,
+        metalness: 0.2
+      });
+      const body = new THREE.Mesh(bodyGeo, bodyMat);
+      body.position.y = 1.5 * size;
+      body.castShadow = true;
+      body.receiveShadow = true;
+      group.add(body);
+      
+      const windowGeo = new THREE.BoxGeometry(0.4, 0.5, 0.1);
+      const windowMat = new THREE.MeshStandardMaterial({ 
+        color: 0x87CEEB,
+        emissive: 0x4A90E2,
+        emissiveIntensity: 0.3
+      });
+      
+      for (let i = 0; i < 2; i++) {
+        const window1 = new THREE.Mesh(windowGeo, windowMat);
+        window1.position.set(-0.6 + i * 1.2, 2 * size, 1.01 * size);
+        window1.castShadow = true;
+        group.add(window1);
       }
+      
+      const roofGeo = new THREE.ConeGeometry(1.7 * size, 1.5 * size, 4);
+      const roofMat = new THREE.MeshStandardMaterial({ 
+        color: 0x8B4513,
+        roughness: 0.9
+      });
+      const roof = new THREE.Mesh(roofGeo, roofMat);
+      roof.position.y = 3.75 * size;
+      roof.rotation.y = Math.PI / 4;
+      roof.castShadow = true;
+      group.add(roof);
+      
+      const doorGeo = new THREE.BoxGeometry(0.6, 1, 0.1);
+      const doorMat = new THREE.MeshStandardMaterial({ color: 0x654321 });
+      const door = new THREE.Mesh(doorGeo, doorMat);
+      door.position.set(0, 0.5 * size, 1.01 * size);
+      door.castShadow = true;
+      group.add(door);
+      
+      group.position.set(x, 0, z);
+      return group;
+    }
+    
+    function createTree(x, z, size = 1) {
+      const group = new THREE.Group();
+      
+      const trunkGeo = new THREE.CylinderGeometry(0.3 * size, 0.4 * size, 2 * size, 8);
+      const trunkMat = new THREE.MeshStandardMaterial({ 
+        color: 0x8B4513,
+        roughness: 1
+      });
+      const trunk = new THREE.Mesh(trunkGeo, trunkMat);
+      trunk.position.y = 1 * size;
+      trunk.castShadow = true;
+      trunk.receiveShadow = true;
+      group.add(trunk);
+      
+      const leavesGeo = new THREE.SphereGeometry(1.2 * size, 8, 8);
+      const leavesMat = new THREE.MeshStandardMaterial({ 
+        color: 0x228B22,
+        roughness: 0.8
+      });
+      const leaves = new THREE.Mesh(leavesGeo, leavesMat);
+      leaves.position.y = 2.5 * size;
+      leaves.castShadow = true;
+      leaves.receiveShadow = true;
+      group.add(leaves);
+      
+      group.position.set(x, 0, z);
+      return group;
+    }
+    
+    function createFence(x, z, rotation) {
+      const group = new THREE.Group();
+      
+      for (let i = 0; i < 4; i++) {
+        const postGeo = new THREE.BoxGeometry(0.2, 1.8, 0.2);
+        const postMat = new THREE.MeshStandardMaterial({ 
+          color: 0xD2691E,
+          roughness: 0.9
+        });
+        const post = new THREE.Mesh(postGeo, postMat);
+        post.position.set(i * 1 - 1.5, 0.9, 0);
+        post.castShadow = true;
+        post.receiveShadow = true;
+        group.add(post);
+      }
+      
+      const railGeo = new THREE.BoxGeometry(3.5, 0.15, 0.15);
+      const railMat = new THREE.MeshStandardMaterial({ 
+        color: 0xD2691E,
+        roughness: 0.9
+      });
+      const rail1 = new THREE.Mesh(railGeo, railMat);
+      rail1.position.y = 1.2;
+      rail1.castShadow = true;
+      group.add(rail1);
+      
+      const rail2 = new THREE.Mesh(railGeo, railMat);
+      rail2.position.y = 0.6;
+      rail2.castShadow = true;
+      group.add(rail2);
+      
+      group.position.set(x, 0, z);
+      group.rotation.y = rotation;
+      return group;
     }
 
-    image.src = images[0].src;
+    function createStreetLamp(x, z) {
+      const group = new THREE.Group();
+      
+      const poleGeo = new THREE.CylinderGeometry(0.1, 0.12, 3.5, 8);
+      const poleMat = new THREE.MeshStandardMaterial({ 
+        color: 0x444444,
+        metalness: 0.7,
+        roughness: 0.3
+      });
+      const pole = new THREE.Mesh(poleGeo, poleMat);
+      pole.position.y = 1.75;
+      pole.castShadow = true;
+      group.add(pole);
+      
+      const lightGeo = new THREE.SphereGeometry(0.3, 8, 8);
+      const lightMat = new THREE.MeshStandardMaterial({ 
+        color: 0xFFFFAA,
+        emissive: 0xFFFF00,
+        emissiveIntensity: 0.8
+      });
+      const light = new THREE.Mesh(lightGeo, lightMat);
+      light.position.y = 3.5;
+      light.castShadow = true;
+      group.add(light);
+      
+      const pointLight = new THREE.PointLight(0xFFFF00, 0.5, 10);
+      pointLight.position.y = 3.5;
+      pointLight.castShadow = true;
+      group.add(pointLight);
+      
+      group.position.set(x, 0, z);
+      return group;
+    }
+
+    function createRoad(x, z, length, rotation) {
+      const group = new THREE.Group();
+      
+      const roadGeo = new THREE.BoxGeometry(length, 0.2, 3);
+      const roadMat = new THREE.MeshStandardMaterial({ 
+        color: 0x404040,
+        roughness: 0.95
+      });
+      const road = new THREE.Mesh(roadGeo, roadMat);
+      road.position.y = 0.5;
+      road.receiveShadow = true;
+      group.add(road);
+      
+      const lineGeo = new THREE.BoxGeometry(length * 0.8, 0.25, 0.2);
+      const lineMat = new THREE.MeshStandardMaterial({ color: 0xFFFFFF });
+      const line = new THREE.Mesh(lineGeo, lineMat);
+      line.position.y = 0.65;
+      group.add(line);
+      
+      group.position.set(x, 0, z);
+      group.rotation.y = rotation;
+      return group;
+    }
+
+    function randomInRange(min, max) {
+      return Math.random() * (max - min) + min;
+    }
+
+    const startYBase = 50;
+    
+    // Houses
+    for (let i = 0; i < 8; i++) {
+      const x = randomInRange(-12, 12);
+      const z = randomInRange(-12, 12);
+      const size = randomInRange(0.8, 1.2);
+      const startY = randomInRange(startYBase, startYBase + 30);
+      const delay = randomInRange(0, 0.4);
+      parts.push({ 
+        obj: createHouse(x, z, 0xFF6B6B, size), 
+        startY, 
+        targetY: 1.5 * size, 
+        delay,
+        rotationSpeed: randomInRange(1, 3)
+      });
+    }
+    
+    // Trees
+    for (let i = 0; i < 12; i++) {
+      const x = randomInRange(-14, 14);
+      const z = randomInRange(-14, 14);
+      const size = randomInRange(0.7, 1.1);
+      const startY = randomInRange(startYBase, startYBase + 25);
+      const delay = randomInRange(0.1, 0.5);
+      parts.push({ 
+        obj: createTree(x, z, size), 
+        startY, 
+        targetY: 1, 
+        delay,
+        rotationSpeed: randomInRange(0.5, 2)
+      });
+    }
+    
+    // Fences
+    for (let i = 0; i < 10; i++) {
+      const x = randomInRange(-13, 13);
+      const z = randomInRange(-13, 13);
+      const rotation = randomInRange(0, Math.PI * 2);
+      const startY = randomInRange(startYBase, startYBase + 20);
+      const delay = randomInRange(0.15, 0.55);
+      parts.push({ 
+        obj: createFence(x, z, rotation), 
+        startY, 
+        targetY: 0.9, 
+        delay,
+        rotationSpeed: randomInRange(1, 2.5)
+      });
+    }
+    
+    // Street Lamps
+    for (let i = 0; i < 6; i++) {
+      const x = randomInRange(-11, 11);
+      const z = randomInRange(-11, 11);
+      const startY = randomInRange(startYBase + 5, startYBase + 35);
+      const delay = randomInRange(0.2, 0.6);
+      parts.push({ 
+        obj: createStreetLamp(x, z), 
+        startY, 
+        targetY: 0, 
+        delay,
+        rotationSpeed: randomInRange(0.8, 2)
+      });
+    }
+    
+    // Roads
+    const roadPositions = [
+      { x: 0, z: -8, length: 25, rotation: 0 },
+      { x: 0, z: 8, length: 25, rotation: 0 },
+      { x: -8, z: 0, length: 25, rotation: Math.PI / 2 },
+      { x: 8, z: 0, length: 25, rotation: Math.PI / 2 }
+    ];
+    
+    roadPositions.forEach((pos, i) => {
+      const startY = randomInRange(startYBase - 5, startYBase + 10);
+      const delay = randomInRange(0.05, 0.35);
+      parts.push({ 
+        obj: createRoad(pos.x, pos.z, pos.length, pos.rotation), 
+        startY, 
+        targetY: 0.5, 
+        delay,
+        rotationSpeed: randomInRange(0.5, 1.5)
+      });
+    });
+
+    parts.forEach(part => {
+      part.obj.position.y = part.startY;
+      scene.add(part.obj);
+    });
+
+    let scrollProgress = 0;
+    const maxScroll = document.body.scrollHeight - window.innerHeight;
+
+    function updatePartsPosition() {
+      parts.forEach(part => {
+        const partProgress = Math.max(0, Math.min(1, (scrollProgress - part.delay) / 0.6));
+        const eased = 1 - Math.pow(1 - partProgress, 3);
+        const newY = part.startY - (part.startY - part.targetY) * eased;
+        part.obj.position.y = newY;
+        part.obj.rotation.y = (1 - eased) * Math.PI * part.rotationSpeed;
+        
+        if (partProgress > 0 && partProgress < 1) {
+          part.obj.rotation.x = Math.sin(partProgress * Math.PI * 4) * 0.1;
+          part.obj.rotation.z = Math.cos(partProgress * Math.PI * 3) * 0.1;
+        } else {
+          part.obj.rotation.x = 0;
+          part.obj.rotation.z = 0;
+        }
+      });
+    }
+
+    window.addEventListener('scroll', () => {
+      scrollProgress = window.scrollY / maxScroll;
+      updatePartsPosition();
+    });
+
+    function animate() {
+      requestAnimationFrame(animate);
+      const time = Date.now() * 0.0001;
+      camera.position.x = Math.sin(time) * 3;
+      camera.position.z = 45 + Math.cos(time) * 2;
+      camera.lookAt(0, 5, 0);
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    updatePartsPosition();
   </script>
 </body>
 </html>
-
