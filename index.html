@@ -138,7 +138,7 @@
       font-size: 1.3rem; 
       max-width: 700px; 
       margin: 0 auto 2.5rem;
-      color: #E2E8F0;
+      color: #79828d;
       font-weight: 400;
       line-height: 1.8;
     }
@@ -524,6 +524,100 @@
       .product-grid, .gallery-grid { grid-template-columns: 1fr; }
       nav a { margin-left: 1.5rem; font-size: 0.85rem; }
     }
+    /* ANIMATED BACKGROUND ELEMENTS */
+.floating-elements {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.floating-element {
+  position: absolute;
+  background: var(--gradient-gold);
+  border-radius: 50%;
+  opacity: 0.1;
+  animation: float 6s ease-in-out infinite;
+}
+
+.floating-element:nth-child(1) {
+  width: 100px;
+  height: 100px;
+  top: 20%;
+  left: 10%;
+  animation-delay: 0s;
+}
+
+.floating-element:nth-child(2) {
+  width: 150px;
+  height: 150px;
+  top: 60%;
+  left: 80%;
+  animation-delay: 2s;
+}
+
+.floating-element:nth-child(3) {
+  width: 80px;
+  height: 80px;
+  top: 80%;
+  left: 20%;
+  animation-delay: 4s;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(180deg); }
+}
+
+/* ENHANCED CARDS */
+.enhanced-card {
+  background: linear-gradient(145deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 24px;
+  padding: 2.5rem;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.enhanced-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+  transition: left 0.6s ease;
+}
+
+.enhanced-card:hover::before {
+  left: 100%;
+}
+
+.enhanced-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(245, 158, 11, 0.3);
+  box-shadow: 0 25px 50px rgba(245, 158, 11, 0.2);
+}
+
+/* PULSING CALL TO ACTION */
+.pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes pulse-glow {
+  from {
+    box-shadow: 0 0 20px rgba(245, 158, 11, 0.4);
+  }
+  to {
+    box-shadow: 0 0 40px rgba(245, 158, 11, 0.8), 0 0 60px rgba(245, 158, 11, 0.4);
+  }
+}
   </style>
 </head>
 <body>
@@ -539,7 +633,12 @@
       </nav>
     </div>
   </header>
-
+<!-- FLOATING BACKGROUND ELEMENTS -->
+<div class="floating-elements">
+  <div class="floating-element"></div>
+  <div class="floating-element"></div>
+  <div class="floating-element"></div>
+</div>
   <!-- FIXED BACKGROUND - MAKETA ASSEMBLY -->
   <div id="maketa-assembly">
     <canvas id="assembly-canvas"></canvas>
@@ -553,7 +652,7 @@
         Premium makete grada i sela sa LED osvetljenjem, punjivim baterijama i ručnom izradom. 
         Bezbedno, trajno i puno avantura za vašu decu!
       </p>
-      <a href="#proizvodi" class="btn">Pogledajte Makete</a>
+      <a href="#proizvodi" class="btn pulse-glow">Pogledajte Makete</a>
     </div>
   </section>
 

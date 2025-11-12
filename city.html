@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="sr" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Maketa Grada - DIDI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Sora:wght@600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    :root {
+      --bg: #0F172A;
+      --text: #FFFFFF;
+      --accent: #F59E0B;
+      --accent-dark: #D97706;
+      --card: rgba(30, 41, 59, 0.8);
+      --gradient-gold: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+    }
+    
+    * { margin:0; padding:0; box-sizing:border-box; }
+    
+    body { 
+      font-family:'Inter',sans-serif; 
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+      color:var(--text); 
+      line-height:1.7;
+      min-height: 100vh;
+    }
+    
+    .container { max-width:1400px; margin:0 auto; padding:0 2rem; }
+    
+    /* HEADER */
+    header {
+      padding:1.5rem 0;
+      background: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(20px);
+      border-bottom:1px solid rgba(245, 158, 11, 0.2);
+    }
+    
+    .nav { 
+      display:flex; 
+      justify-content:space-between; 
+      align-items:center; 
+    }
+    
+    .logo { 
+      display:flex; 
+      align-items:center; 
+      gap:0.7rem; 
+      font-size:2rem; 
+      background: var(--gradient-gold);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-decoration:none; 
+      font-weight:800;
+    }
+    
+    nav a { 
+      color:#fff; 
+      text-decoration:none; 
+      margin-left:2rem; 
+      font-weight:600; 
+      transition: color 0.3s ease;
+    }
+    
+    nav a:hover { color: #F59E0B; }
+
+    /* GALLERY */
+    .gallery-container {
+      padding: 8rem 2rem 4rem;
+    }
+    
+    .gallery-title {
+      text-align: center;
+      font-size: 4rem;
+      margin-bottom: 3rem;
+      background: var(--gradient-gold);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-family: 'Sora', sans-serif;
+    }
+    
+    .gallery-subtitle {
+      text-align: center;
+      font-size: 1.3rem;
+      color: #CBD5E1;
+      margin-bottom: 4rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .gallery-main {
+      display: grid;
+      grid-template-columns: 1fr 400px;
+      gap: 3rem;
+      align-items: start;
+    }
+    
+    .main-viewer {
+      background: var(--card);
+      backdrop-filter: blur(20px);
+      border-radius: 24px;
+      padding: 2rem;
+      border: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    #main-image {
+      width: 100%;
+      height: 600px;
+      object-fit: cover;
+      border-radius: 16px;
+      cursor: grab;
+      transition: transform 0.3s ease;
+    }
+    
+    #main-image:active {
+      cursor: grabbing;
+    }
+    
+    .zoom-controls {
+      position: absolute;
+      bottom: 2rem;
+      right: 2rem;
+      display: flex;
+      gap: 0.5rem;
+      background: rgba(15, 23, 42, 0.8);
+      backdrop-filter: blur(10px);
+      padding: 0.75rem;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    
+    .zoom-btn {
+      width: 40px;
+      height: 40px;
+      border: none;
+      background: var(--gradient-gold);
+      color: #0F172A;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1.2rem;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+    
+    .zoom-btn:hover {
+      transform: scale(1.1);
+    }
+    
+    .thumbnail-strip {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .thumbnail {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+    }
+    
+    .thumbnail:hover {
+      transform: scale(1.05);
+      border-color: var(--accent);
+    }
+    
+    .thumbnail.active {
+      border-color: var(--accent);
+      box-shadow: 0 0 20px rgba(245, 158, 11, 0.4);
+    }
+    
+    .product-info {
+      background: var(--card);
+      backdrop-filter: blur(20px);
+      border-radius: 24px;
+      padding: 2.5rem;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    
+    .product-info h2 {
+      font-size: 2.5rem;
+      margin-bottom: 1.5rem;
+      background: var(--gradient-gold);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-family: 'Sora', sans-serif;
+    }
+    
+    .features-list {
+      list-style: none;
+      margin: 2rem 0;
+    }
+    
+    .features-list li {
+      padding: 0.75rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    
+    .features-list li:before {
+      content: '✓';
+      color: #10B981;
+      font-weight: bold;
+    }
+    
+    .price {
+      font-size: 3rem;
+      font-weight: 800;
+      background: var(--gradient-gold);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin: 2rem 0;
+    }
+    
+    .btn {
+      background: var(--gradient-gold);
+      color: #0F172A;
+      padding: 1.2rem 3rem;
+      border: none;
+      border-radius: 100px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-block;
+      text-decoration: none;
+      text-align: center;
+    }
+    
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(245, 158, 11, 0.4);
+    }
+    
+    .floating-elements {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+    
+    .floating-element {
+      position: absolute;
+      background: var(--gradient-gold);
+      border-radius: 50%;
+      opacity: 0.05;
+      animation: float 8s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-30px) rotate(180deg); }
+    }
+  </style>
+</head>
+<body>
+  <!-- FLOATING BACKGROUND -->
+  <div class="floating-elements">
+    <div class="floating-element" style="width: 200px; height: 200px; top: 10%; left: 5%; animation-delay: 0s;"></div>
+    <div class="floating-element" style="width: 150px; height: 150px; top: 70%; left: 80%; animation-delay: 2s;"></div>
+    <div class="floating-element" style="width: 100px; height: 100px; top: 40%; left: 90%; animation-delay: 4s;"></div>
+  </div>
+
+  <!-- HEADER -->
+  <header>
+    <div class="nav container">
+      <a href="index.html" class="logo">🏘️ DIDI</a>
+      <nav>
+        <a href="index.html">Početna</a>
+        <a href="village.html">Maketa Sela</a>
+        <a href="#kontakt">Kontakt</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- GALLERY SECTION -->
+  <section class="gallery-container">
+    <div class="container">
+      <h1 class="gallery-title">Maketa Grada</h1>
+      <p class="gallery-subtitle">Uživajte u svakom detalju naše premium makete grada sa LED osvetljenjem i ručnom izradom</p>
+      
+      <div class="gallery-main">
+        <div class="main-viewer">
+          <img id="main-image" src="https://i.ebayimg.com/images/g/fa0AAOSwuSlhk3jg/s-l1200.jpg" alt="Maketa Grada" 
+               data-zoom="1">
+          <div class="zoom-controls">
+            <button class="zoom-btn" onclick="zoomIn()">+</button>
+            <button class="zoom-btn" onclick="zoomOut()">-</button>
+            <button class="zoom-btn" onclick="resetZoom()">⟲</button>
+          </div>
+        </div>
+        
+        <div class="thumbnail-strip">
+          <img class="thumbnail active" src="https://i.ebayimg.com/images/g/fa0AAOSwuSlhk3jg/s-l1200.jpg" 
+               data-full="https://i.ebayimg.com/images/g/fa0AAOSwuSlhk3jg/s-l1200.jpg" alt="Pogled 1">
+          <img class="thumbnail" src="https://m.media-amazon.com/images/S/aplus-media-library-service-media/eff56314-8995-49e3-ab6d-75a7912a57c7.__CR0,0,970,600_PT0_SX970_V1___.jpg" 
+               data-full="https://m.media-amazon.com/images/S/aplus-media-library-service-media/eff56314-8995-49e3-ab6d-75a7912a57c7.__CR0,0,970,600_PT0_SX970_V1___.jpg" alt="Pogled 2">
+          <img class="thumbnail" src="https://images.unsplash.com/photo-1587132135056-a67022613a24?ixlib=rb-4.0.1&auto=format&fit=crop&w=1000&q=80" 
+               data-full="https://images.unsplash.com/photo-1587132135056-a67022613a24?ixlib=rb-4.0.1&auto=format&fit=crop&w=2000&q=80" alt="Pogled 3">
+          <img class="thumbnail" src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.1&auto=format&fit=crop&w=1000&q=80" 
+               data-full="https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.1&auto=format&fit=crop&w=2000&q=80" alt="Pogled 4">
+        </div>
+      </div>
+      
+      <div class="product-info">
+        <h2>Premium Maketa Grada</h2>
+        <p>Naša maketa grada predstavlja vrhunski primerak ručne izrade sa pažljivo osmišljenim detaljima koji će oduševiti svaku generaciju.</p>
+        
+        <ul class="features-list">
+          <li>Dimenzije: 1m x 1m premium ploča</li>
+          <li>LED osvetljenje sa punjivim baterijama</li>
+          <li>Ručno oslikani detalji i teksture</li>
+          <li>EN71 sertifikat bezbednosti</li>
+          <li>Realistične zgrade i ulice</li>
+          <li>Doživotna garancija i servis</li>
+          <li>Interaktivni elementi za igru</li>
+        </ul>
+        
+        <div class="price">18.999 RSD</div>
+        <a href="#poruci" class="btn">Poručite Odmah</a>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Gallery functionality
+    const mainImage = document.getElementById('main-image');
+    const thumbnails = document.querySelectorAll('.thumbnail');
+    let currentZoom = 1;
+    let isDragging = false;
+    let startX, startY, scrollLeft, scrollTop;
+
+    // Thumbnail click handler
+    thumbnails.forEach(thumb => {
+      thumb.addEventListener('click', function() {
+        // Update main image
+        mainImage.src = this.dataset.full;
+        mainImage.style.transform = 'scale(1)';
+        currentZoom = 1;
+        
+        // Update active thumbnail
+        thumbnails.forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+
+    // Zoom functionality
+    function zoomIn() {
+      currentZoom += 0.3;
+      mainImage.style.transform = `scale(${currentZoom})`;
+    }
+
+    function zoomOut() {
+      if (currentZoom > 0.5) {
+        currentZoom -= 0.3;
+        mainImage.style.transform = `scale(${currentZoom})`;
+      }
+    }
+
+    function resetZoom() {
+      currentZoom = 1;
+      mainImage.style.transform = 'scale(1)';
+    }
+
+    // Drag to pan functionality
+    mainImage.addEventListener('mousedown', startDrag);
+    mainImage.addEventListener('touchstart', startDrag);
+
+    function startDrag(e) {
+      isDragging = true;
+      mainImage.style.cursor = 'grabbing';
+      
+      if (e.type === 'mousedown') {
+        startX = e.pageX - mainImage.offsetLeft;
+        startY = e.pageY - mainImage.offsetTop;
+      } else {
+        startX = e.touches[0].pageX - mainImage.offsetLeft;
+        startY = e.touches[0].pageY - mainImage.offsetTop;
+      }
+    }
+
+    document.addEventListener('mouseup', () => {
+      isDragging = false;
+      mainImage.style.cursor = 'grab';
+    });
+
+    document.addEventListener('touchend', () => {
+      isDragging = false;
+      mainImage.style.cursor = 'grab';
+    });
+
+    document.addEventListener('mousemove', drag);
+    document.addEventListener('touchmove', drag);
+
+    function drag(e) {
+      if (!isDragging || currentZoom <= 1) return;
+      
+      e.preventDefault();
+      let x, y;
+      
+      if (e.type === 'mousemove') {
+        x = e.pageX - mainImage.offsetLeft;
+        y = e.pageY - mainImage.offsetTop;
+      } else {
+        x = e.touches[0].pageX - mainImage.offsetLeft;
+        y = e.touches[0].pageY - mainImage.offsetTop;
+      }
+      
+      const walkX = (x - startX) * 2;
+      const walkY = (y - startY) * 2;
+      
+      // You would typically implement panning logic here
+      // This is a simplified version
+    }
+  </script>
+</body>
+</html>
