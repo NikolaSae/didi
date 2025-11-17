@@ -1,4 +1,6 @@
-// THREE.JS MAKETA ASSEMBLY ANIMATION
+// ============================================
+// POSTOJEĆI THREE.JS MAKETA ASSEMBLY KOD
+// ============================================
 (function() {
   const canvas = document.getElementById('assembly-canvas');
   const scene = new THREE.Scene();
@@ -68,7 +70,6 @@
   function createHouse(x, z, color, size = 1) {
     const group = new THREE.Group();
     
-    // Body
     const bodyGeo = new THREE.BoxGeometry(2 * size, 3 * size, 2 * size);
     const bodyMat = new THREE.MeshStandardMaterial({ 
       map: brickTexture,
@@ -81,7 +82,6 @@
     body.receiveShadow = true;
     group.add(body);
     
-    // Windows
     const windowGeo = new THREE.BoxGeometry(0.4, 0.5, 0.1);
     const windowMat = new THREE.MeshStandardMaterial({ 
       color: 0x87CEEB,
@@ -96,7 +96,6 @@
       group.add(window1);
     }
     
-    // Roof
     const roofGeo = new THREE.ConeGeometry(1.7 * size, 1.5 * size, 4);
     const roofMat = new THREE.MeshStandardMaterial({ 
       color: 0x8B4513,
@@ -108,7 +107,6 @@
     roof.castShadow = true;
     group.add(roof);
     
-    // Door
     const doorGeo = new THREE.BoxGeometry(0.6, 1, 0.1);
     const doorMat = new THREE.MeshStandardMaterial({ color: 0x654321 });
     const door = new THREE.Mesh(doorGeo, doorMat);
@@ -124,7 +122,6 @@
   function createTree(x, z, size = 1) {
     const group = new THREE.Group();
     
-    // Trunk
     const trunkGeo = new THREE.CylinderGeometry(0.3 * size, 0.4 * size, 2 * size, 8);
     const trunkMat = new THREE.MeshStandardMaterial({ 
       color: 0x8B4513,
@@ -136,7 +133,6 @@
     trunk.receiveShadow = true;
     group.add(trunk);
     
-    // Leaves
     const leavesGeo = new THREE.SphereGeometry(1.2 * size, 8, 8);
     const leavesMat = new THREE.MeshStandardMaterial({ 
       color: 0x228B22,
@@ -156,7 +152,6 @@
   function createFence(x, z, rotation) {
     const group = new THREE.Group();
     
-    // Posts
     for (let i = 0; i < 4; i++) {
       const postGeo = new THREE.BoxGeometry(0.2, 1.8, 0.2);
       const postMat = new THREE.MeshStandardMaterial({ 
@@ -170,7 +165,6 @@
       group.add(post);
     }
     
-    // Rails
     const railGeo = new THREE.BoxGeometry(3.5, 0.15, 0.15);
     const railMat = new THREE.MeshStandardMaterial({ 
       color: 0xD2691E,
@@ -195,7 +189,6 @@
   function createStreetLamp(x, z) {
     const group = new THREE.Group();
     
-    // Pole
     const poleGeo = new THREE.CylinderGeometry(0.1, 0.12, 3.5, 8);
     const poleMat = new THREE.MeshStandardMaterial({ 
       color: 0x444444,
@@ -207,7 +200,6 @@
     pole.castShadow = true;
     group.add(pole);
     
-    // Light bulb
     const lightGeo = new THREE.SphereGeometry(0.3, 8, 8);
     const lightMat = new THREE.MeshStandardMaterial({ 
       color: 0xFFFFAA,
@@ -219,7 +211,6 @@
     light.castShadow = true;
     group.add(light);
     
-    // Point light
     const pointLight = new THREE.PointLight(0xFFFF00, 0.5, 10);
     pointLight.position.y = 3.5;
     pointLight.castShadow = true;
@@ -233,7 +224,6 @@
   function createRoad(x, z, length, rotation) {
     const group = new THREE.Group();
     
-    // Road surface
     const roadGeo = new THREE.BoxGeometry(length, 0.2, 3);
     const roadMat = new THREE.MeshStandardMaterial({ 
       color: 0x404040,
@@ -244,7 +234,6 @@
     road.receiveShadow = true;
     group.add(road);
     
-    // Road line
     const lineGeo = new THREE.BoxGeometry(length * 0.8, 0.25, 0.2);
     const lineMat = new THREE.MeshStandardMaterial({ color: 0xFFFFFF });
     const line = new THREE.Mesh(lineGeo, lineMat);
@@ -256,16 +245,12 @@
     return group;
   }
 
-  // ============ HELPER FUNCTION ============
   function randomInRange(min, max) {
     return Math.random() * (max - min) + min;
   }
 
   const startYBase = 50;
   
-  // ============ CREATE SCENE OBJECTS ============
-  
-  // Houses
   for (let i = 0; i < 8; i++) {
     const x = randomInRange(-12, 12);
     const z = randomInRange(-12, 12);
@@ -281,7 +266,6 @@
     });
   }
   
-  // Trees
   for (let i = 0; i < 12; i++) {
     const x = randomInRange(-14, 14);
     const z = randomInRange(-14, 14);
@@ -297,7 +281,6 @@
     });
   }
   
-  // Fences
   for (let i = 0; i < 10; i++) {
     const x = randomInRange(-13, 13);
     const z = randomInRange(-13, 13);
@@ -313,7 +296,6 @@
     });
   }
   
-  // Street Lamps
   for (let i = 0; i < 6; i++) {
     const x = randomInRange(-11, 11);
     const z = randomInRange(-11, 11);
@@ -328,7 +310,6 @@
     });
   }
   
-  // Roads
   const roadPositions = [
     { x: 0, z: -8, length: 25, rotation: 0 },
     { x: 0, z: 8, length: 25, rotation: 0 },
@@ -348,25 +329,22 @@
     });
   });
 
-  // Add all parts to scene
   parts.forEach(part => {
     part.obj.position.y = part.startY;
     scene.add(part.obj);
   });
 
-  // ============ SCROLL ANIMATION ============
   let scrollProgress = 0;
   const maxScroll = document.body.scrollHeight - window.innerHeight;
 
   function updatePartsPosition() {
     parts.forEach(part => {
       const partProgress = Math.max(0, Math.min(1, (scrollProgress - part.delay) / 0.6));
-      const eased = 1 - Math.pow(1 - partProgress, 3); // Ease-out cubic
+      const eased = 1 - Math.pow(1 - partProgress, 3);
       const newY = part.startY - (part.startY - part.targetY) * eased;
       part.obj.position.y = newY;
       part.obj.rotation.y = (1 - eased) * Math.PI * part.rotationSpeed;
       
-      // Add wobble during animation
       if (partProgress > 0 && partProgress < 1) {
         part.obj.rotation.x = Math.sin(partProgress * Math.PI * 4) * 0.1;
         part.obj.rotation.z = Math.cos(partProgress * Math.PI * 3) * 0.1;
@@ -383,7 +361,6 @@
     updatePartsPosition();
   });
 
-  // ============ ANIMATION LOOP ============
   function animate() {
     requestAnimationFrame(animate);
     const time = Date.now() * 0.0001;
@@ -394,16 +371,18 @@
   }
   animate();
 
-  // ============ WINDOW RESIZE ============
   window.addEventListener('resize', () => {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
   });
 
-  // Initial position update
   updatePartsPosition();
 })();
+
+// ============================================
+// POSTOJEĆI PARTICLES.JS EFEKAT
+// ============================================
 particlesJS('particles-js', {
   "particles": {
     "number": {
@@ -452,7 +431,7 @@ particlesJS('particles-js', {
     },
     "move": {
       "enable": true,
-      "speed": 1.5,
+      "speed": 1,
       "direction": "none",
       "random": true,
       "straight": false,
@@ -492,3 +471,120 @@ particlesJS('particles-js', {
   },
   "retina_detect": true
 });
+
+// ============================================
+// NOVI TSPARTICLES MASK EFEKAT (samo za hero)
+// ============================================
+(function() {
+  // Kreiranje SVG-a za "DIDI" tekst
+  const svgText = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 100">
+    <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="Sora, sans-serif" font-size="80" font-weight="800" fill="none" stroke="#ffffff" stroke-width="2">DIDI</text>
+  </svg>`;
+  
+  const svgBlob = new Blob([svgText], { type: 'image/svg+xml' });
+  const svgUrl = URL.createObjectURL(svgBlob);
+
+  tsParticles.load("tsparticles", {
+    detectRetina: true,
+    fpsLimit: 120,
+    smooth: true,
+    interactivity: {
+      detectsOn: "canvas",
+      events: {
+        onHover: {
+          enable: true,
+          mode: "bubble"
+        },
+        resize: true
+      },
+      modes: {
+        bubble: {
+          distance: 40,
+          duration: 1,
+          opacity: 1,
+          size: 6,
+          speed: 1
+        }
+      }
+    },
+    particles: {
+      color: {
+        value: ["#ebc61d", "#c33056", "#f3f3f2", "#d65577"]
+      },
+      lineLinked: {
+        blink: false,
+        color: "random",
+        consent: false,
+        distance: 50,
+        enable: true,
+        opacity: 0.2,
+        width: 1.5
+      },
+      move: {
+        attract: {
+          enable: true
+        },
+        bounce: false,
+        direction: "none",
+        enable: true,
+        outMode: "bounce",
+        random: false,
+        speed: 1,
+        straight: true
+      },
+      number: {
+        density: {
+          enable: false
+        },
+        limit: 0,
+        value: 150
+      },
+      opacity: {
+        animation: {
+          enable: true,
+          minimumValue: 0.05,
+          speed: 2,
+          sync: true
+        },
+        random: {
+          enable: true,
+          minimumValue: 4.05
+        },
+        value: 4
+      },
+      shape: {
+        type: "circle"
+      },
+      size: {
+        animation: {
+          enable: true
+        },
+        random: false,
+        value: 2
+      }
+    },
+    polygon: {
+      draw: {
+        enable: true,
+        lineColor: "rgba(235, 198, 29, 0.2)",
+        lineWidth: 0.6
+      },
+      enable: true,
+      move: {
+        radius: 5
+      },
+      inlineArrangement: "equidistant",
+      scale: 3.8,
+      type: "inline",
+      url: "logotest3.svg",
+      position: {
+        x: 50,
+        y: 50
+      }
+    }
+  }).then(container => {
+    console.log("✅ tsParticles DIDI mask efekat učitan!");
+  }).catch(error => {
+    console.error("❌ tsParticles greška:", error);
+  });
+})();

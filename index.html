@@ -7,6 +7,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Sora:wght@600;700;800&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
 
   <!-- HEADER -->
@@ -37,8 +38,14 @@
     <canvas id="assembly-canvas"></canvas>
   </div>
 
+  <!-- PARTICLES.JS BACKGROUND (postojeći efekat) -->
+  <div id="particles-js"></div>
+
   <!-- HERO SECTION -->
   <section class="section hero full-width">
+    <!-- tsParticles MASK efekat (novi efekat samo u hero sekciji) -->
+    <div id="tsparticles"></div>
+    
     <div class="container">
       <h1>Otkrijte Magiju<br>DIDI Maketa!</h1>
       <p>
@@ -48,6 +55,12 @@
       <a href="#proizvodi" class="btn pulse-glow">Pogledajte Makete</a>
     </div>
   </section>
+
+  <div class="wave-separator wave-down wave-light wave-7-peaks wave-animated">
+    <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
+      <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" class="shape-fill"></path>
+    </svg>
+  </div>
 
   <!-- PRODUCTS & GALLERY -->
   <section class="section split full-width" id="proizvodi">
@@ -215,15 +228,19 @@
     </div>
   </footer>
 
+  <!-- THREE.JS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   
-  <div id="particles-js"></div>
+  <!-- PARTICLES.JS (postojeći efekat) -->
   <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-  <script>
-    particlesJS.load('particles-js', 'particlesjs-config.json', function() {
-      console.log('✅ Particles loaded from config file!');
-    });
-  </script>
+  
+  <!-- PathSeg Polyfill za tsParticles -->
+  <script src="https://cdn.jsdelivr.net/npm/pathseg@1.2.0/pathseg.min.js"></script>
+  
+  <!-- tsParticles v1 (novi mask efekat) -->
+  <script src="https://cdn.jsdelivr.net/npm/tsparticles@1.43.1/tsparticles.min.js"></script>
+  
+  <!-- Vaš glavni JS -->
   <script src="app.js"></script>
 </body>
 </html>

@@ -44,6 +44,7 @@ h1, h2, h3 {
   padding: 0 2rem; 
   position: relative; 
   z-index: 10; 
+  visibility:hidden
 }
 
 /* ============ HEADER ============ */
@@ -92,16 +93,16 @@ header {
   height: 50px;
   width: auto;
   object-fit: contain;
-  filter: brightness(1.3) contrast(1.2);
+  /* filter: brightness(1.3) contrast(1.2); */
   transition: all 0.3s ease;
-  background: transparent;
-  padding: 8px;
+  background: white;
+  /* padding: 8px; */
   border-radius: 12px;
 }
 
 .logo:hover .logo-img {
   transform: scale(1.05) rotate(3deg);
-  filter: brightness(1.4) contrast(1.3);
+  /* filter: brightness(1.4) contrast(1.3); */
 }
 
 .logo span {
@@ -248,7 +249,7 @@ nav a:hover {
   left: 0;
   right: 0;
   bottom: 0;
-  background: radial-gradient(circle at center, rgba(4, 11, 17, 0.85) 0%, rgba(4, 11, 17, 0.6) 50%, transparent 100%);
+  /* background: radial-gradient(circle at center, rgba(4, 11, 17, 0.85) 0%, rgba(4, 11, 17, 0.6) 50%, transparent 100%); */
   z-index: -1;
 }
 
@@ -965,7 +966,7 @@ footer {
     font-size: 0.85rem; 
   }
   .logo-img {
-    height: 35px;
+    height: 4rem;
   }
   .logo span {
     font-size: 1.5rem;
@@ -1060,4 +1061,102 @@ html {
 
 ::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(180deg, #7BA3D6 0%, #4F84C4 100%);
+}
+/* ===== WAVE EFEKTI - TALAS NA GORE POSLE HERA ===== */
+
+.wave-separator {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  margin: 0;
+  padding: 0;
+  z-index: 10;
+}
+
+.wave-separator svg {
+  position: relative;
+  display: block;
+  width: calc(100% + 1.3px);
+}
+
+/* Visine talasa */
+.wave-small svg { height: 60px; }
+.wave-medium svg { height: 90px; }
+.wave-large svg { height: 130px; }
+
+/* TALAS NA GORE - Ovo je ključno: bez rotacije */
+.wave-up {
+  top: 0;
+}
+
+/* TALAS NA DOLE - sa rotacijom */
+.wave-down {
+  transform: rotate(180deg);
+  bottom: 0;
+}
+
+/* Boje talasa */
+.wave-light .shape-fill { fill: #f8f9fa; }
+.wave-white .shape-fill { fill: #ffffff; }
+.wave-primary .shape-fill { fill: #4F84C4; }
+
+/* Stilovi talasa */
+.wave-5-peaks svg { height: 90px; }
+.wave-7-peaks svg { height: 110px; }
+
+/* Animacija */
+@keyframes waveMove {
+  0% { transform: translateX(0); }
+  50% { transform: translateX(-15px); }
+  100% { transform: translateX(0); }
+}
+
+.wave-animated svg {
+  animation: waveMove 4s ease-in-out infinite;
+}
+
+/* Reset za animirane wave-down elemente */
+.wave-down.wave-animated svg {
+  transform: rotate(180deg);
+}
+
+/* Ostali vaši stilovi */
+body {
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.section {
+  position: relative;
+  padding: 80px 0;
+  z-index: 1;
+}
+
+.hero {
+  background: linear-gradient(135deg, #4F84C4 0%, #3a6ba8 100%);
+  color: white;
+  text-align: center;
+  padding: 120px 0;
+  position: relative;
+  overflow: hidden;
+}
+.hero .container {
+  position: relative;
+  z-index: 2;
+}
+
+.split {
+  background: #f8f9fa;
+  padding: 80px 0;
+}
+#tsparticles {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  pointer-events: none;
 }
