@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@tsparticles/plugin-polygon-mask": "^3.9.1"
+  }
+}
