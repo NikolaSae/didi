@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVG Path Flow - Particles Through Path</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background: #000;
+            overflow: hidden;
+        }
+        #c {
+            display: block;
+        }
+        .controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.9);
+            padding: 15px;
+            border-radius: 8px;
+            color: white;
+            font-family: 'Courier New', monospace;
+            z-index: 100;
+            border: 1px solid #0f0;
+            box-shadow: 0 0 20px rgba(0,255,0,0.3);
+        }
+        .controls h3 {
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: #0f0;
+            text-shadow: 0 0 10px #0f0;
+        }
+        .controls button {
+            display: block;
+            width: 100%;
+            margin: 5px 0;
+            padding: 10px;
+            background: #111;
+            color: #0f0;
+            border: 1px solid #0f0;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            transition: all 0.2s;
+        }
+        .controls button:hover {
+            background: #0f0;
+            color: #000;
+            box-shadow: 0 0 15px #0f0;
+        }
+        .controls label {
+            font-size: 11px;
+            color: #0f0;
+            display: block;
+            margin: 10px 0 3px 0;
+        }
+        .controls input[type="range"] {
+            width: 100%;
+            margin: 5px 0;
+        }
+        .info {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(0,0,0,0.9);
+            padding: 10px 15px;
+            border-radius: 8px;
+            color: #0f0;
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+            border: 1px solid #0f0;
+            box-shadow: 0 0 20px rgba(0,255,0,0.3);
+        }
+        svg {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="c"></canvas>
+    
+    <svg id="pathSvg" width="600" height="600">
+        <path id="mainPath" d="" fill="none" stroke="#0f0" stroke-width="2"/>
+    </svg>
+    
+    <div class="controls">
+        <h3>⚙️ PATH FLOW</h3>
+        <button onclick="toggleAnimation()">⏯️ Play/Pause</button>
+        <button onclick="resetAnimation()">🔄 Reset</button>
+        
+        <label>Particle Count: <span id="countVal">1</span></label>
+        <input type="range" min="1" max="59" value="1" oninput="updateCount(this.value)">
+        
+        <label>Speed: <span id="speedVal">2</span></label>
+        <input type="range" min="0.1" max="10" step="0.1" value="2" oninput="updateSpeed(this.value)">
+        
+        <label>Trail: <span id="trailVal">80</span></label>
+        <input type="range" min="1" max="200" value="80" oninput="updateTrail(this.value)">
+        
+        <label>Particle Size: <span id="sizeVal">2</span></label>
+        <input type="range" min="1" max="10" value="2" oninput="updateSize(this.value)">
+        
+        <label>Glow: <span id="glowVal">15</span></label>
+        <input type="range" min="0" max="50" value="15" oninput="updateGlow(this.value)">
+    </div>
+    
+    <div class="info">
+        <div>✨ Particles: <span id="particleCount">0</span></div>
+        <div>📏 Path Length: <span id="pathLength">0</span>px</div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('c');
+        const ctx = canvas.getContext('2d');
+        let w = canvas.width = window.innerWidth;
+        let h = canvas.height = window.innerHeight;
+        
+        // SVG FILE PATH - PROMENI OVO SA SVOJIM FAJLOM
+        const svgFilePath = './logotest26.svg'; // Stavi svoj SVG fajl ovde
+        
+        let shapes = [];
+        let currentShapeIndex = 0;
+        let pathPoints = [];
+        let pathLength = 0;
+        let particles = [];
+        let animationRunning = true;
+        
+        // SETTINGS
+        let opts = {
+            particleCount: 1,
+            speed: 2,
+            trailAlpha: 0.02500, // 1 / (80 * 2) - duži trail sa bojama
+            particleSize: 2,
+            glow: 15,
+            colorCycleSpeed: 0.4
+        };
+        
+        // PARTICLE CLASS - Follows exact path
+        class Particle {
+            constructor(startOffset = null) {
+                this.offset = startOffset !== null ? startOffset : Math.random();
+                this.speed = 0.0001 + Math.random() * 0.0001;
+                this.hue = Math.random() * 360;
+                this.hueSpeed = (Math.random() - 0.5) * opts.colorCycleSpeed;
+                this.size = opts.particleSize * (0.5 + Math.random() * 0.5);
+            }
+            
+            update() {
+                // Move along path
+                this.offset += this.speed * opts.speed;
+                
+                // Loop back to start
+                if (this.offset >= 1) {
+                    this.offset = 0;
+                }
+                
+                // Color cycle
+                this.hue += this.hueSpeed;
+                if (this.hue < 0) this.hue += 360;
+                if (this.hue > 360) this.hue -= 360;
+            }
+            
+            getPosition() {
+                if (!pathPoints || pathPoints.length < 2) {
+                    return { x: w/2, y: h/2 };
+                }
+                
+                const index = Math.floor(this.offset * (pathPoints.length - 1));
+                const nextIndex = Math.min(index + 1, pathPoints.length - 1);
+                const t = (this.offset * (pathPoints.length - 1)) - index;
+                
+                // Linear interpolation between points
+                const p1 = pathPoints[index];
+                const p2 = pathPoints[nextIndex];
+                
+                return {
+                    x: p1.x + (p2.x - p1.x) * t,
+                    y: p1.y + (p2.y - p1.y) * t
+                };
+            }
+            
+            draw() {
+                const pos = this.getPosition();
+                
+                ctx.shadowBlur = opts.glow;
+                ctx.shadowColor = `hsl(${this.hue}, 100%, 50%)`;
+                ctx.fillStyle = `hsl(${this.hue}, 100%, 60%)`;
+                
+                ctx.beginPath();
+                ctx.arc(pos.x, pos.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+        
+        // LOAD SVG FILE
+        async function loadSVGFile(filePath) {
+            try {
+                const response = await fetch(filePath);
+                if (!response.ok) {
+                    throw new Error(`Failed to load SVG: ${response.status}`);
+                }
+                
+                const svgText = await response.text();
+                const parser = new DOMParser();
+                const svgDoc = parser.parseFromString(svgText, 'image/svg+xml');
+                
+                // Extract all <path> elements and combine them
+                const paths = svgDoc.querySelectorAll('path');
+                let allPathsData = [];
+                
+                paths.forEach((path, index) => {
+                    const d = path.getAttribute('d');
+                    if (d && d.trim().length > 0) {
+                        console.log(`📌 Found path ${index + 1}`);
+                        allPathsData.push(d);
+                    }
+                });
+                
+                if (allPathsData.length === 0) {
+                    throw new Error('No paths found in SVG file');
+                }
+                
+                // Combine all paths into one
+                const combinedPath = allPathsData.join(' ');
+                shapes = [{
+                    name: `All Paths (${allPathsData.length})`,
+                    path: combinedPath
+                }];
+                
+                console.log(`✅ Combined ${allPathsData.length} path(s) from ${filePath}`);
+                
+                // Initialize
+                init();
+                
+            } catch (error) {
+                console.error('❌ Error loading SVG:', error);
+                alert(`Failed to load SVG file: ${error.message}\n\nMake sure the file path is correct: ${filePath}`);
+            }
+        }
+        
+        // EXTRACT POINTS FROM SVG PATH
+        function extractPathPoints(pathString) {
+            try {
+                const pathElement = document.getElementById('mainPath');
+                pathElement.setAttribute('d', pathString);
+                
+                const rawPoints = [];
+                const totalLength = pathElement.getTotalLength();
+                
+                if (!totalLength || totalLength === 0 || isNaN(totalLength)) {
+                    console.error('❌ Invalid path length:', totalLength);
+                    console.log('Path data:', pathString.substring(0, 100) + '...');
+                    return [{x: w/2, y: h/2}]; // Fallback point
+                }
+                
+                pathLength = totalLength;
+                console.log(`📏 Original path length: ${Math.floor(totalLength)}px`);
+                
+                // Extract points
+                const numPoints = Math.min(2000, Math.max(500, Math.floor(totalLength / 2)));
+                
+                for (let i = 0; i <= numPoints; i++) {
+                    const point = pathElement.getPointAtLength((i / numPoints) * totalLength);
+                    rawPoints.push({ x: point.x, y: point.y });
+                }
+                
+                // Calculate bounding box
+                let minX = Infinity, minY = Infinity;
+                let maxX = -Infinity, maxY = -Infinity;
+                
+                rawPoints.forEach(p => {
+                    if (p.x < minX) minX = p.x;
+                    if (p.x > maxX) maxX = p.x;
+                    if (p.y < minY) minY = p.y;
+                    if (p.y > maxY) maxY = p.y;
+                });
+                
+                const pathWidth = maxX - minX;
+                const pathHeight = maxY - minY;
+                
+                console.log(`📐 Path bounds: ${Math.floor(pathWidth)}x${Math.floor(pathHeight)}px`);
+                
+                // Scale to fit screen (80% of screen size)
+                const targetSize = Math.min(w, h) * 0.8;
+                const scale = targetSize / Math.max(pathWidth, pathHeight);
+                
+                console.log(`🔍 Scale factor: ${scale.toFixed(2)}x`);
+                
+                // Center and scale all points
+                const scaledPoints = rawPoints.map(p => ({
+                    x: (p.x - minX) * scale + (w - pathWidth * scale) / 2,
+                    y: (p.y - minY) * scale + (h - pathHeight * scale) / 2
+                }));
+                
+                console.log(`✅ Extracted and scaled ${scaledPoints.length} points`);
+                return scaledPoints;
+                
+            } catch (error) {
+                console.error('❌ Error extracting path points:', error);
+                return [{x: w/2, y: h/2}];
+            }
+        }
+        
+        // INITIALIZE
+        function init() {
+            if (shapes.length === 0) {
+                console.log('⏳ Waiting for SVG to load...');
+                return;
+            }
+            
+            console.log(`🔄 Initializing...`);
+            
+            const shape = shapes[0]; // Always use first (combined) shape
+            pathPoints = extractPathPoints(shape.path);
+            
+            if (pathPoints.length < 2) {
+                console.error('❌ Not enough path points, using fallback');
+                // Create a simple circle as fallback
+                pathPoints = [];
+                for (let i = 0; i < 360; i++) {
+                    pathPoints.push({
+                        x: w/2 + Math.cos(i * Math.PI / 180) * 200,
+                        y: h/2 + Math.sin(i * Math.PI / 180) * 200
+                    });
+                }
+            }
+            
+            // Create particles evenly distributed along path
+            particles = [];
+            for (let i = 0; i < opts.particleCount; i++) {
+                particles.push(new Particle(i / opts.particleCount));
+            }
+            
+            console.log(`✅ Created ${particles.length} particles`);
+            
+            document.getElementById('pathLength').textContent = Math.floor(pathLength);
+        }
+        
+        // ANIMATION LOOP
+        function animate() {
+            if (!animationRunning) return;
+            
+            requestAnimationFrame(animate);
+            
+            // Trail effect - semi-transparent black fade
+            ctx.globalCompositeOperation = 'source-over';
+            ctx.fillStyle = `rgba(0, 0, 0, ${opts.trailAlpha})`;
+            ctx.fillRect(0, 0, w, h);
+            
+            // Draw particles with additive blending for glow
+            ctx.globalCompositeOperation = 'lighter';
+            
+            // Update and draw particles
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            
+            document.getElementById('particleCount').textContent = particles.length;
+        }
+        
+        // CONTROLS
+        function toggleAnimation() {
+            animationRunning = !animationRunning;
+            if (animationRunning) animate();
+        }
+        
+        function resetAnimation() {
+            ctx.fillStyle = 'black';
+            ctx.fillRect(0, 0, w, h);
+            init();
+        }
+        
+        function updateCount(val) {
+            const newCount = parseInt(val);
+            document.getElementById('countVal').textContent = val;
+            
+            // Adjust particle count
+            while (particles.length < newCount) {
+                particles.push(new Particle());
+            }
+            while (particles.length > newCount) {
+                particles.pop();
+            }
+            
+            opts.particleCount = newCount;
+        }
+        
+        function updateSpeed(val) {
+            opts.speed = parseFloat(val);
+            document.getElementById('speedVal').textContent = val;
+        }
+        
+        function updateTrail(val) {
+            // Formula: što je veća vrednost slidera, duži je trail
+            // Inverz formule: veća vrednost = manja alpha = sporije blijedi
+            opts.trailAlpha = 1 / (parseFloat(val) * 2);
+            document.getElementById('trailVal').textContent = val;
+        }
+        
+        function updateSize(val) {
+            opts.particleSize = parseFloat(val);
+            document.getElementById('sizeVal').textContent = val;
+            particles.forEach(p => p.size = opts.particleSize * (0.5 + Math.random() * 0.5));
+        }
+        
+        function updateGlow(val) {
+            opts.glow = parseFloat(val);
+            document.getElementById('glowVal').textContent = val;
+        }
+        
+        // RESIZE HANDLER
+        window.addEventListener('resize', () => {
+            w = canvas.width = window.innerWidth;
+            h = canvas.height = window.innerHeight;
+            ctx.fillStyle = 'black';
+            ctx.fillRect(0, 0, w, h);
+        });
+        
+        // START
+        ctx.fillStyle = '#000';
+        ctx.fillRect(0, 0, w, h);
+        
+        // Load SVG file and start animation
+        loadSVGFile(svgFilePath).then(() => {
+            animate();
+        });
+    </script>
+</body>
+</html>

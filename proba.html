@@ -1,171 +1,253 @@
 <!DOCTYPE html>
-<html lang="sr">
+<html lang="sr" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Google Logo Particles - Balans</title>
-    <style>
-        body, html { 
-            margin: 0; 
-            padding: 0; 
-            height: 100%; 
-            background: #000; 
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        #tsparticles { 
-            position: fixed; 
-            width: 100%; 
-            height: 100%; 
-            top: 0; 
-            left: 0; 
-            z-index: 1; 
-        }
-    </style>
-    
-    <script src="https://cdn.jsdelivr.net/npm/tsparticles@1.43.1/tsparticles.min.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DIDI – Magični Svet Igre</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Sora:wght@600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="styles1.css">
 </head>
+
 <body>
-    <div id="tsparticles"></div>
 
-    <script>
-    // Funkcija za konvertovanje SVG fajla u base64
-    async function svgToBase64(svgUrl) {
-        try {
-            const response = await fetch(svgUrl);
-            const svgText = await response.text();
-            const base64 = btoa(unescape(encodeURIComponent(svgText)));
-            return `data:image/svg+xml;base64,${base64}`;
-        } catch (error) {
-            console.error('Greška pri učitavanju SVG fajla:', error);
-            return null;
-        }
-    }
+  <!-- HEADER -->
+  <header>
+    <div class="nav">
+      <a href="#" class="logo">
+        <img src="logo.png" alt="DIDI Logo" class="logo-img">
+        <span>DIDI</span>
+      </a>
+      <nav>
+        <a href="#proizvodi">Proizvodi</a>
+        <a href="#galerija">Galerija</a>
+        <a href="#vs">Uporedi</a>
+        <a href="#recenzije">Recenzije</a>
+      </nav>
+    </div>
+  </header>
 
-    // Učitaj SVG i pokreni particles
-    async function initParticles() {
-        const svgBase64 = await svgToBase64('logotest19.svg');   
-        if (!svgBase64) {
-            console.error('Ne mogu da učitam SVG');
-            return;
-        }
+  <!-- SVG PATH FLOW CANVAS -->
+  <canvas id="pathCanvas"></canvas>
 
-        tsParticles.load("tsparticles", {
-            pauseOnBlur: false,
-            fpsLimit: 60,
-            interactivity: {
-                onClick: {
-                    enable: true,
-                    mode: "grab"
-                },
-                detectsOn: "canvas",
-                events: {
-                    onHover: {
-                        enable: true,
-                        mode: "bubble"
-                    },
-                    resize: true
-                },
-                modes: {
-                    bubble: {
-                        distance: 50,
-                        duration: 2,
-                        opacity: 1,
-                        size: 3.5
-                    },
-                    grab: {
-                        distance: 150,
-                        links: {
-                            opacity: 1
-                        }
-                    }
-                }
-            },
-            particles: {
-                color: {
-                    value: ["#4285f4", "#34A853", "#FBBC05", "#EA4335"]
-                },
-                links: {
-                    color: "random",
-                    distance: 30,
-                    enable: true,
-                    opacity: 0.4,
-                    width: 1
-                },
-                collisions: {
-                    enable: false
-                },
-                move: {
-                    enable: true,
-                    direction: "none",
-                    outModes: {
-                        default: "bounce"
-                    },
-                    random: false,
-                    speed: 0.2,
-                    straight: false,
-                    bounce: false
-                },
-                number: {
-                    density: {
-                        enable: false
-                    },
-                    value: 400
-                },
-                opacity: {
-                    value: 0.6,
-                    animation: {
-                        enable: true,
-                        speed: 0.3,
-                        minimumValue: 0.3,
-                        sync: false
-                    }
-                },
-                shape: {
-                    type: "circle"
-                },
-                size: {
-                    value: 2,
-                    random: {
-                        enable: true,
-                        minimumValue: 1
-                    },
-                    animation: {
-                        enable: false
-                    }
-                }
-            },
-            polygon: {
-                enable: true,
-                type: "inline",
-                move: {
-                    radius: 2,
-                    type: "path"
-                },
-                position: {
-                    x: 0,
-                    y: -20
-                },
-                inline: {
-                    arrangement: "equidistant"
-                },
-                scale: 0.8,
-                draw: {
-                    enable: false
-                },
-                url: svgBase64
-            },
-            background: {
-                color: "#000000"
-            },
-            detectRetina: true
-        });
-    }
+  <!-- CONTROLS PANEL - ISPRAVNO POZICIONIRAN -->
+  <div class="controls-panel">
+    <button class="controls-toggle" id="controlsToggle">⚙️</button>
+    <div class="controls-content" id="controlsContent">
+      <h3>Kontrole Animacije</h3>
+      
+      <div class="control-group">
+        <label for="particleCount">Broj Čestica: <span id="particleCountValue">20</span></label>
+        <input type="range" id="particleCount" min="5" max="200" value="20" step="1">
+      </div>
+      
+      <div class="control-group">
+        <label for="particleSize">Veličina: <span id="particleSizeValue">1.5</span></label>
+        <input type="range" id="particleSize" min="0.5" max="5" value="1.5" step="0.1">
+      </div>
+      
+      <div class="control-group">
+        <label for="speed">Brzina: <span id="speedValue">1</span></label>
+        <input type="range" id="speed" min="0.1" max="5" value="1" step="0.1">
+      </div>
+      
+      <div class="control-group">
+        <label for="trailAlpha">Trail: <span id="trailAlphaValue">0.02</span></label>
+        <input type="range" id="trailAlpha" min="0.001" max="0.1" value="0.02" step="0.001">
+      </div>
+      
+      <div class="control-group">
+        <label for="glow">Glow: <span id="glowValue">0</span></label>
+        <input type="range" id="glow" min="0" max="50" value="0" step="1">
+      </div>
+      
+      <button class="btn btn-small reset-btn" id="resetBtn">Reset</button>
+    </div>
+  </div>
 
-    // Pokreni kada se stranica učita
-    initParticles();
-    </script>
+  <!-- HERO SECTION -->
+  <section class="section hero full-width">
+    <div class="container">
+      <h1>Otkrijte Magiju<br>DIDI Maketa!</h1>
+      <p>
+        Premium makete grada i sela sa LED osvetljenjem, punjivim baterijama i ručnom izradom. 
+        Bezbedno, trajno i puno avantura za vašu decu!
+      </p>
+      <a href="#proizvodi" class="btn pulse-glow">Pogledajte Makete</a>
+    </div>
+  </section>
+
+  <!-- PRODUCTS & GALLERY -->
+  <section class="section split full-width" id="proizvodi">
+    <div class="sections-wrapper">
+      <div class="card-premium">
+        <h2>Naše Makete</h2>
+        <div class="product-grid">
+          <div class="product-item">
+            <img src="https://i.ebayimg.com/images/g/fa0AAOSwuSlhk3jg/s-l1200.jpg" alt="Maketa Grada">
+            <h3>Maketa Grada</h3>
+            <p>1m x 1m ploča sa zgradama, svetlima, ulicama i detaljima. LED za noćnu igru, punjiva baterija.</p>
+            <a href="#galerija" class="btn btn-small">Detalji</a>
+          </div>
+          <div class="product-item">
+            <img src="https://www.inquirer.com/resizer/niRxA0eJJmoC4O0YGfaJ6UBb3pQ=/arc-anglerfish-arc2-prod-pmn/public/XC65IGYTI5CLDM3WPWOO3TPETI.jpg" alt="Maketa Sela">
+            <h3>Maketa Sela</h3>
+            <p>1m x 1m sa farmama, životinjama, rekama i LED svetlima. Ručno oslikano, bezbedno za decu.</p>
+            <a href="#galerija" class="btn btn-small">Detalji</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- GALLERY -->
+      <div class="card-premium" id="galerija">
+        <h2>Izbliza</h2>
+        <div class="gallery-grid">
+          <div class="gallery-item">
+            <img src="https://i.ebayimg.com/images/g/fa0AAOSwuSlhk3jg/s-l1200.jpg" alt="Noćna scena">
+            <p><strong>LED Osvetljenje</strong></p>
+          </div>
+          <div class="gallery-item">
+            <img src="https://www.inquirer.com/resizer/niRxA0eJJmoC4O0YGfaJ6UBb3pQ=/arc-anglerfish-arc2-prod-pmn/public/XC65IGYTI5CLDM3WPWOO3TPETI.jpg" alt="Detalji">
+            <p><strong>Ručna Izrada</strong></p>
+          </div>
+          <div class="gallery-item">
+            <img src="https://m.media-amazon.com/images/S/aplus-media-library-service-media/eff56314-8995-49e3-ab6d-75a7912a57c7.__CR0,0,970,600_PT0_SX970_V1___.jpg" alt="Komplet">
+            <p><strong>Kompletna Maketa</strong></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VS TABLE & FEATURES -->
+  <section class="section split full-width" id="vs">
+    <div class="sections-wrapper">
+      <div class="card-premium">
+        <h2>DIDI VS Obične</h2>
+        <div class="vs-table">
+          <table>
+            <tr><th>Karakteristika</th><th>Obične</th><th class="highlight">DIDI</th></tr>
+            <tr><td>Bezbednost</td><td>Rizik</td><td class="highlight">EN71 sertifikat</td></tr>
+            <tr><td>Trajnost</td><td>Brzo se kvare</td><td class="highlight">Doživotna garancija</td></tr>
+            <tr><td>Zabava</td><td>Kratkotrajna</td><td class="highlight">Godine mašte</td></tr>
+            <tr><td>Održavanje</td><td>Sami rešavate</td><td class="highlight">Servis 48h</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- FEATURES -->
+      <div class="card-premium">
+        <h2>Zašto DIDI?</h2>
+        <div class="feature-grid">
+          <div class="feature-item">
+            <div class="feature-icon">🔒</div>
+            <h3>Bezbedno</h3>
+            <p>EN71 sertifikat netoksične boje</p>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">💡</div>
+            <h3>LED Svetla</h3>
+            <p>Punjive baterije</p>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">🎨</div>
+            <h3>Ručna Izrada</h3>
+            <p>Unikatno delo</p>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">🛠️</div>
+            <h3>Popravke</h3>
+            <p>Besplatno zauvek</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="section full-width" id="recenzije">
+    <div class="testimonials">
+      <h2>Šta Kažu Roditelji</h2>
+      <div class="testimonial-grid">
+        <div class="testimonial">
+          <div class="stars">⭐⭐⭐⭐⭐</div>
+          <p>"Moj sin se igra svaki dan! LED svetla su fantastična, a kvalitet je neverovatno dobar."</p>
+          <p><strong>– Marija, Beograd</strong></p>
+        </div>
+        <div class="testimonial">
+          <div class="stars">⭐⭐⭐⭐⭐</div>
+          <p>"Konačno igračka koja traje! Baterija se puni za sat vremena i drži celu nedelju."</p>
+          <p><strong>– Stefan, Novi Sad</strong></p>
+        </div>
+        <div class="testimonial">
+          <div class="stars">⭐⭐⭐⭐⭐</div>
+          <p>"Ručna izrada se vidi! Svaki detalj je savršen. Deca su oduševljena!"</p>
+          <p><strong>– Ana, Niš</strong></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="full-width">
+    <div class="container">
+      <div class="footer-content">
+        <!-- Logo i kontakt -->
+        <div class="footer-section">
+          <div class="footer-logo">
+            <img src="logo.png" alt="DIDI Logo" class="logo-img">
+            <span>DIDI</span>
+          </div>
+          <div class="contact-info">
+            <div class="contact-item">
+              <span class="contact-icon">📧</span>
+              <a href="mailto:info@didi.rs">info@didi.rs</a>
+            </div>
+            <div class="contact-item">
+              <span class="contact-icon">📞</span>
+              <a href="tel:+381601234567">+381 60 123 4567</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Brzi linkovi -->
+        <div class="footer-section">
+          <h4>Linkovi</h4>
+          <ul class="footer-links">
+            <li><a href="#proizvodi">Proizvodi</a></li>
+            <li><a href="#galerija">Galerija</a></li>
+            <li><a href="#vs">Uporedi</a></li>
+            <li><a href="#recenzije">Recenzije</a></li>
+          </ul>
+        </div>
+
+        <!-- Socijalne mreže -->
+        <div class="footer-section">
+          <h4>Pratite Nas</h4>
+          <div class="social-links">
+            <a href="#" aria-label="Facebook" class="social-link">Facebook</a>
+            <a href="#" aria-label="Instagram" class="social-link">Instagram</a>
+            <a href="#" aria-label="YouTube" class="social-link">YouTube</a>
+          </div>
+          <div class="sitemap-link">
+            <a href="/sitemap.xml">Mapa Sajta</a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Copyright -->
+      <div class="footer-bottom">
+        <p>&copy; 2025 DIDI. Sva prava zadržana.</p>
+        <a href="#proizvodi" class="btn btn-small">Kupi Sada</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Hidden SVG for path extraction -->
+  <svg id="pathSvg" style="position: fixed; opacity: 0; pointer-events: none;">
+    <path id="mainPath" d="" fill="none"/>
+  </svg>
+
+  <!-- Main JS -->
+  <script src="app2.js"></script>
 </body>
 </html>
