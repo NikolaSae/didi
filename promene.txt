@@ -87,3 +87,23 @@ Sada npm run db:push treba da prođe bez greške. Javi ako iskočii još nešto!
 
 
 Failed to load config file "C:\xampp\htdocs\graviranje-app" as a TypeScript/JavaScript module. Error: ReferenceError: defineConfig is not defined
+
+import path from "node:path";
+import { defineConfig } from "prisma/config";
+
+// Prisma 7 — konfiguracija konekcije živi ovde, ne u schema.prisma
+export default defineConfig({
+  schema: path.join(__dirname, "prisma/schema.prisma"),
+  migrate: {
+    async adapter(env) {
+      // Za migrate/db push koristi DIRECT konekciju (ne pooler)
+      const { PrismaPg } = await import("@prisma/adapter-pg");
+      const { Pool } = await import("pg");
+      const pool = new Pool({
+        connectionString: env.DATABASE_DIRECT_URL ?? env.DATABASE_URL,
+      });
+      return new PrismaPg(pool);
+    },
+  },
+});
+
