@@ -20,3 +20,44 @@ Validation Error Count: 2
 [Context: getConfig]
 
 Prisma CLI Version : 7.9.1
+
+Šta je promenjeno
+prisma/schema.prisma
+prisma
+
+// STARO — ne radi u Prisma 7
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")      // ❌
+  directUrl = env("DATABASE_DIRECT_URL") // ❌
+}
+
+// NOVO — samo provider, bez URL-a
+datasource db {
+  provider = "postgresql"
+}
+prisma.config.ts ← novi fajl
+ts
+
+// URL živi ovde u Prisma 7
+export default defineConfig({
+  schema: "prisma/schema.prisma",
+  migrate: {
+    adapter: (env) => new PrismaPg(new Pool({ 
+      connectionString: env.DATABASE_DIRECT_URL 
+    }))
+  }
+})
+lib/prisma.ts
+ts
+
+// Adapter se sada prosleđuje PrismaClient konstruktoru
+const adapter = new PrismaPg(new Pool({ connectionString: process.env.DATABASE_URL }))
+export const prisma = new PrismaClient({ adapter })
+package.json — dodate zavisnosti
+json
+
+"@prisma/adapter-pg": "latest",
+"pg": "latest",
+"@types/pg": "latest"
+Sada npm run db:push treba da prođe bez greške. Javi ako iskočii još nešto! 🚀
