@@ -84,3 +84,6 @@ if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
 "pg": "latest",
 "@types/pg": "latest"
 Sada npm run db:push treba da prođe bez greške. Javi ako iskočii još nešto! 🚀
+
+
+Failed to load config file "C:\xampp\htdocs\graviranje-app" as a TypeScript/JavaScript module. Error: ReferenceError: defineConfig is not defined
