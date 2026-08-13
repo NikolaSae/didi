@@ -111,3 +111,17 @@ Loaded Prisma config from prisma.config.ts.
 
 Prisma schema loaded from prisma\schema.prisma.
 Error: The datasource.url property is required in your Prisma config file when using prisma migrate dev
+
+
+import path from "node:path";
+import { defineConfig } from "prisma/config";
+
+// Prisma 7 — URL konekcije živi ovde, ne u schema.prisma
+// Za migrate/db push koristi DIRECT URL (ne pooler)
+// Runtime (lib/prisma.ts) koristi DATABASE_URL (pooler)
+export default defineConfig({
+  schema: path.join(__dirname, "prisma/schema.prisma"),
+  datasource: {
+    url: process.env.DATABASE_DIRECT_URL ?? process.env.DATABASE_URL!,
+  },
+});
