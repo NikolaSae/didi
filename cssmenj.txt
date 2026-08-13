@@ -103,3 +103,38 @@ Error: Parsing CSS source code failed
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+
+
+
+
+
+ GET /school 404 in 688ms (next.js: 501ms, application-code: 187ms)
+ GET / 200 in 212ms (next.js: 28ms, application-code: 184ms)
+ GET /api/auth/get-session 200 in 825ms
+[browser] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+⨯ Error: Missing API key. Pass it to the constructor `new Resend("re_123")`
+    at <unknown> (lib\auth.ts:7:16)
+   5 | import { prisma } from "./prisma";
+   6 |
+>  7 | const resend = new Resend(process.env.RESEND_API_KEY);
+     |                ^
+   8 |
+   9 | export const auth = betterAuth({
+  10 |   baseURL: process.env.BETTER_AUTH_URL ?? "http://localhost:3000", {
+  type: 'Error',
+  page: '/api/auth/get-session'
+}
+⨯ Error: Missing API key. Pass it to the constructor `new Resend("re_123")`
+    at <unknown> (lib\auth.ts:7:16)
+   5 | import { prisma } from "./prisma";
+   6 |
+>  7 | const resend = new Resend(process.env.RESEND_API_KEY);
+     |                ^
+   8 |
+   9 | export const auth = betterAuth({
+  10 |   baseURL: process.env.BETTER_AUTH_URL ?? "http://localhost:3000", {
+  type: 'Error',
+  page: '/api/auth/get-session'
+}
+ GET /api/auth/get-session 500 in 1022ms (next.js: 826ms, application-code: 197ms)
